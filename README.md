@@ -5,10 +5,10 @@
 ### Group Backlog:
 https://docs.google.com/spreadsheets/d/1JCvuqDmIKhIHvicyV1MLb2VOi72WebHdFx2wUzmmFq0/edit?usp=sharing
 
-### Sysytem Spec:
+### System Spec:
 https://docs.google.com/document/d/1eB-fsnNfyj-h2GCBRhB4DDtd5zsfc9kK/edit?usp=sharing&ouid=104483822282812448340&rtpof=true&sd=true
 
-### Classes Relation Draw.io:
+### Classes Relation UML Diagram (Draw.io):
 https://drive.google.com/file/d/1RS94TfMt3VyIdLlMZPf9R-ax0TwSc6-k/view?usp=sharing
 
 ### Class Attribute List:
