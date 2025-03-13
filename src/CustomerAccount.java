@@ -1,2 +1,260 @@
-public class CustomerAccount {
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class CustomerAccount implements ManagerInterface<CustomerAccount>{
+
+    //member list
+    private String customerName = "default name";
+    private String email = "default email";
+    private String phone = "default phone";
+    private String address = "default address";
+    private String paymentMethod = "default payment";
+    private String InterestedCategory = "default interest";
+    private LocalDate dateOfBirth = LocalDate.of(1500, 1, 1);
+
+
+    private String versionNumber = "default versionNumber";
+
+
+    //status of an account
+    private boolean suspended = false;
+    private boolean premiumUser = false;
+    private boolean acceptTextMessage = false;
+    private boolean hasProblemWithLastOrder = false;
+
+    //a list of item ID for storing the customers favorites
+    private List<Integer> favorites;
+
+
+    private int customerID = 0;
+
+    private int rewardPoints = 0;
+
+    private double totalSavings = 0.0;
+
+
+    // member class
+    private DealManager dealManager;
+    private OrderManager orderManager;
+    private ReviewManager reviewManager;
+
+
+    //no argument Constructor
+    //important values are set to -1 to distinguish invalid user
+    public CustomerAccount() {
+        customerID = -1;
+        totalSavings = -1;
+        rewardPoints = -1;
+
+        favorites = new ArrayList<>();
+    }
+
+    //name and phone
+    //initialize with only name and phone number
+    public CustomerAccount(String customerName, String phone){
+        boolean nameValid = false;
+        boolean phoneValid = false;
+
+            nameValid = setCustomerName(customerName);
+
+            phoneValid = setPhone(phone);
+
+    }
+
+
+
+    //setter
+
+    // return value: true: set successful
+    // false: set operation failed
+    public boolean setCustomerName(String customerName) {
+        if(customerName.matches(".*[^A-z0-9 ].*")) { // this regex allows white spaces
+            System.out.println("names should only contain alphabet, spaces, or numbers");
+            return false;
+        }
+
+        this.customerName = customerName;
+        return true;
+    }
+
+    public boolean setEmail(String email) {
+        this.email = email;
+        return true;
+    }
+
+    public boolean setPhone(String phone) {
+        if(phone.matches("[^0-9]")) {
+            System.out.println("phones should only contain numbers");
+            return false;
+        }
+        if(phone.length() != 10) {
+            System.out.println("phones should be exactly 10 digits," +
+                "don't use (), -, or white spaces");
+            return false;
+        }
+        this.phone = phone;
+        return true;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setInterestedCategory(String interestedCategory) {
+        InterestedCategory = interestedCategory;
+    }
+
+    public void setVersionNumber(String versionNumber) {
+        this.versionNumber = versionNumber;
+    }
+
+    public void setSuspended(boolean suspended) {
+        this.suspended = suspended;
+    }
+
+    public void setPremiumUser(boolean premiumUser) {
+        this.premiumUser = premiumUser;
+    }
+
+    public void setAcceptTextMessage(boolean acceptTextMessage) {
+        this.acceptTextMessage = acceptTextMessage;
+    }
+
+    public void setHasProblemWithLastOrder(boolean hasProblemWithLastOrder) {
+        this.hasProblemWithLastOrder = hasProblemWithLastOrder;
+    }
+
+    public void setFavorites(List<Integer> favorites) {
+        this.favorites = favorites;
+    }
+
+    public void setCustomerID(int customerID) {
+        this.customerID = customerID;
+    }
+
+    public void setRewardPoints(int rewardPoints) {
+        this.rewardPoints = rewardPoints;
+    }
+
+    public void setTotalSavings(int totalSavings) {
+        this.totalSavings = totalSavings;
+    }
+
+
+    public void setDealManager(DealManager dealManager) {
+        this.dealManager = dealManager;
+    }
+
+    public void setOrderManager(OrderManager orderManager) {
+        this.orderManager = orderManager;
+    }
+
+    public void setReviewManager(ReviewManager reviewManager) {
+        this.reviewManager = reviewManager;
+    }
+
+    //getter
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getInterestedCategory() {
+        return InterestedCategory;
+    }
+
+    public String getVersionNumber() {
+        return versionNumber;
+    }
+
+    public boolean isSuspended() {
+        return suspended;
+    }
+
+    public boolean isPremiumUser() {
+        return premiumUser;
+    }
+
+    public boolean isAcceptTextMessage() {
+        return acceptTextMessage;
+    }
+
+    public boolean isHasProblemWithLastOrder() {
+        return hasProblemWithLastOrder;
+    }
+
+    public List<Integer> getFavorites() {
+        return favorites;
+    }
+
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public int getRewardPoints() {
+        return rewardPoints;
+    }
+
+    public double getTotalSavings() {
+        return totalSavings;
+    }
+
+
+
+    public DealManager getDealManager() {
+        return dealManager;
+    }
+
+    public OrderManager getOrderManager() {
+        return orderManager;
+    }
+
+    public ReviewManager getReviewManager() {
+        return reviewManager;
+    }
+
+    @Override
+    public String generateID(String... args) {
+        return "";
+    }
+
+    @Override
+    public String getID() {
+        return "";
+    }
+
+    @Override
+    public CustomerAccount getMember(String memberID) {
+        return null;
+    }
 }
