@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CustomerAccount {
+public class CustomerAccount implements ManagerInterface<CustomerAccount>{
 
     //member list
     private String customerName = "default name";
@@ -42,16 +42,24 @@ public class CustomerAccount {
 
 
     //no argument Constructor
+    //important values are set to -1 to distinguish invalid user
     public CustomerAccount() {
-        customerID = -1;  // -1 to distinguish invalid user
+        customerID = -1;
         totalSavings = -1;
         rewardPoints = -1;
 
         favorites = new ArrayList<>();
     }
 
+    //name and phone
     //initialize with only name and phone number
     public CustomerAccount(String customerName, String phone){
+        boolean nameValid = false;
+        boolean phoneValid = false;
+
+            nameValid = setCustomerName(customerName);
+
+            phoneValid = setPhone(phone);
 
     }
 
@@ -59,16 +67,35 @@ public class CustomerAccount {
 
     //setter
 
-    public void setCustomerName(String customerName) {
+    // return value: true: set successful
+    // false: set operation failed
+    public boolean setCustomerName(String customerName) {
+        if(customerName.matches(".*[^A-z0-9 ].*")) { // this regex allows white spaces
+            System.out.println("names should only contain alphabet, spaces, or numbers");
+            return false;
+        }
+
         this.customerName = customerName;
+        return true;
     }
 
-    public void setEmail(String email) {
+    public boolean setEmail(String email) {
         this.email = email;
+        return true;
     }
 
-    public void setPhone(String phone) {
+    public boolean setPhone(String phone) {
+        if(phone.matches("[^0-9]")) {
+            System.out.println("phones should only contain numbers");
+            return false;
+        }
+        if(phone.length() != 10) {
+            System.out.println("phones should be exactly 10 digits," +
+                "don't use (), -, or white spaces");
+            return false;
+        }
         this.phone = phone;
+        return true;
     }
 
     public void setAddress(String address) {
@@ -214,5 +241,20 @@ public class CustomerAccount {
 
     public ReviewManager getReviewManager() {
         return reviewManager;
+    }
+
+    @Override
+    public String generateID(String... args) {
+        return "";
+    }
+
+    @Override
+    public String getID() {
+        return "";
+    }
+
+    @Override
+    public CustomerAccount getMember(String memberID) {
+        return null;
     }
 }

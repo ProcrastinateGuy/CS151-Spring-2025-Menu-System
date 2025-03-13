@@ -1,0 +1,14 @@
+names to reject:
+asd+asd
+asd-asd
+asd*/asd
+asd<>asd
+asd	asd
+-------------------------
+names to accept
+asd789asd
+asd asd
+789 789
+ASD ASD
+ASDASD
+ASD 789 asd
