@@ -4,7 +4,7 @@ public interface ManagerInterface <T> {
 
     // ID generation method for the object it's managing
     // allows multiple Strings as parameter
-    String generateID(String... args);
+    String generateID(String source1, String source2, String source3);
     String getID();
 
     // this method has a generic return type
