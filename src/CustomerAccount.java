@@ -6,6 +6,7 @@ import java.util.List;
 public class CustomerAccount implements ManagerInterface<CustomerAccount>{
 
     //member list
+    private String customerID = "default ID";
     private String customerName = "default name";
     private String email = "default email";
     private String phone = "default phone";
@@ -28,10 +29,8 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     private List<Integer> favorites;
 
 
-    private int customerID = 0;
 
     private int rewardPoints = 0;
-
     private double totalSavings = 0.0;
 
 
@@ -44,7 +43,7 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     //no argument Constructor
     //important values are set to -1 to distinguish invalid user
     public CustomerAccount() {
-        customerID = -1;
+        customerID = "-1";
         totalSavings = -1;
         rewardPoints = -1;
 
@@ -54,16 +53,28 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     //name and phone
     //initialize with only name and phone number
     public CustomerAccount(String customerName, String phone){
-        boolean nameValid = false;
-        boolean phoneValid = false;
+        setCustomerName(customerName);
+        setPhone(phone);
 
-            nameValid = setCustomerName(customerName);
-
-            phoneValid = setPhone(phone);
-
+        // all other values remain as default
     }
 
 
+    //interface methods
+    @Override
+    public String generateID(String name, String phone, String c) {
+        return "";
+    }
+
+    @Override
+    public String getID() {
+        return customerID;
+    }
+
+    @Override
+    public CustomerAccount getMember(String memberID) {
+        return null;
+    }
 
     //setter
 
@@ -138,7 +149,7 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         this.favorites = favorites;
     }
 
-    public void setCustomerID(int customerID) {
+    public void setCustomerID(String customerID) {
         this.customerID = customerID;
     }
 
@@ -217,10 +228,6 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         return favorites;
     }
 
-    public int getCustomerID() {
-        return customerID;
-    }
-
     public int getRewardPoints() {
         return rewardPoints;
     }
@@ -243,18 +250,5 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         return reviewManager;
     }
 
-    @Override
-    public String generateID(String... args) {
-        return "";
-    }
 
-    @Override
-    public String getID() {
-        return "";
-    }
-
-    @Override
-    public CustomerAccount getMember(String memberID) {
-        return null;
-    }
 }

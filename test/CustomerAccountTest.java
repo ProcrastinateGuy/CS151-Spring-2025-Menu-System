@@ -12,7 +12,7 @@ public class CustomerAccountTest {
 
     @Test
     public void testCustomerAccountNames() {
-        String nameTestFilePath = ".\\src\\names.txt";
+        String nameTestFilePath = ".\\testResource\\names.txt";
         List<String> Names = new ArrayList<String>();
         List<CustomerAccount> accountListName = new ArrayList<CustomerAccount>();
 
@@ -49,7 +49,7 @@ public class CustomerAccountTest {
     }
     @Test
     public void testCustomerAccountPhones() {
-        String phoneTestFilePath = ".\\src\\phones.txt";
+        String phoneTestFilePath = ".\\testResource\\phones.txt";
         List<String> Phones = new ArrayList<String>();
         List<CustomerAccount> accountListPhone = new ArrayList<CustomerAccount>();
 
