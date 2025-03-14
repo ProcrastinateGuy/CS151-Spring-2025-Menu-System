@@ -91,6 +91,12 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     }
 
     public boolean setEmail(String email) {
+        //we only check for the characters that is not allowed in an email address
+        if(email.matches(".*[^A-z0-9.@].*") || email.matches("^((?!@).)*$")){
+            System.out.println("email addresses should only contain alphabet, ., ,numbers" +
+                "and at least one @");
+            return false;
+        }
         this.email = email;
         return true;
     }
@@ -196,6 +202,8 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         return paymentMethod;
     }
 
+    // since LocalDate is immutable, there's no need to clone it
+    // we can simply return the original object
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }

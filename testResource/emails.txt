@@ -1,0 +1,11 @@
+---------emails to reject---------
+asd asd@gmail.com
+asd/-/asd@gmail.com
+asdㄅasd@gmail.com
+"asdasd@gmail.com"
+asdasd?gmail.com
+asdasdgmail.com
+
+emailsto@accept
+asd@gmail.com
+asd@asd@asdgmail.com.com.com
