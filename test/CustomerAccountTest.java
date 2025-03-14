@@ -84,4 +84,29 @@ public class CustomerAccountTest {
         }
 
     }
+
+    @Test
+    public void testCustomerAccountEmails() {
+        String emailTestFilePath = ".\\testResource\\emails.txt";
+        CustomerAccount a = new CustomerAccount();
+
+        List<String> Emails = new ArrayList<String>();
+        // try with resource
+        try(BufferedReader br = new BufferedReader(new FileReader(emailTestFilePath))){
+            String line;
+            while ((line = br.readLine()) != null) {
+                Emails.add(line);
+            }
+        }catch(IOException e){
+            System.err.println("Error reading file: " + e.getMessage());
+        }
+
+        Iterator<String> emailIterator = Emails.iterator();
+        while(emailIterator.hasNext()) {
+            a.setEmail(emailIterator.next());
+            System.out.println(a.getEmail());
+        }
+
+
+    }
 }
