@@ -1,11 +1,16 @@
+//order manager
+import java.util.UUID;
+
 public class OrderManager implements ManagerInterface <Order>{
     @Override
-    public String generateID(String arg1, String arg2, String arg3) {
-        return "";
+    public String generateID( ) {
+        UUID uniqueID = UUID.randomUUID();
+        return "order".concat(uniqueID.toString());
     }
 
     @Override
-    public String getID() {
+    public String getID(Order orderToCheck) {
+
         return "";
     }
 

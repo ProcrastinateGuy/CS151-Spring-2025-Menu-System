@@ -1,6 +1,8 @@
+//Customer account
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class CustomerAccount implements ManagerInterface<CustomerAccount>{
@@ -62,12 +64,13 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
 
     //interface methods
     @Override
-    public String generateID(String name, String phone, String c) {
-        return "";
+    public String generateID() {
+        UUID uniqueID = UUID.randomUUID();
+        return "account".concat(uniqueID.toString());
     }
 
     @Override
-    public String getID() {
+    public String getID( CustomerAccount account ) {
         return customerID;
     }
 
@@ -91,12 +94,6 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     }
 
     public boolean setEmail(String email) {
-        //we only check for the characters that is not allowed in an email address
-        if(email.matches(".*[^A-z0-9.@].*") || email.matches("^((?!@).)*$")){
-            System.out.println("email addresses should only contain alphabet, ., ,numbers" +
-                "and at least one @");
-            return false;
-        }
         this.email = email;
         return true;
     }
@@ -108,7 +105,7 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         }
         if(phone.length() != 10) {
             System.out.println("phones should be exactly 10 digits," +
-                "don't use (), -, or white spaces");
+                    "don't use (), -, or white spaces");
             return false;
         }
         this.phone = phone;
@@ -202,8 +199,6 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         return paymentMethod;
     }
 
-    // since LocalDate is immutable, there's no need to clone it
-    // we can simply return the original object
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
