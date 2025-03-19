@@ -21,6 +21,21 @@ public class Deal {
 
     //constructor
     public Deal(float dealModifier, String startDate, String endDate, String dealCode) {
+        if (dealModifier > 1) {
+            throw new IllegalArgumentException("Deal Modifier cannot be greater than 1");
+        }
+
+        if (convertDateFormat(startDate).isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Start date cannot be before current date");
+        }
+
+        if (convertDateFormat(endDate).isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("End date cannot be before current date");
+        }
+        if (convertDateFormat(endDate).isBefore(convertDateFormat(startDate))) {
+            throw new IllegalArgumentException("End date cannot be before start date");
+        }
+
         this.dealModifier = dealModifier;
         this.startDate = convertDateFormat(startDate);
         this.endDate = convertDateFormat(endDate);
@@ -33,6 +48,9 @@ public class Deal {
     }
 
     public void setDealModifier(float dealModifier) {
+        if (dealModifier > 1) {
+            throw new IllegalArgumentException("Deal Modifier cannot be greater than 1");
+        }
         this.dealModifier = dealModifier;
     }
 
@@ -40,18 +58,29 @@ public class Deal {
         return startDate;
     }
 
+    //Dates should be 
+    public void setStartDate(String startDate) {
 
+        if (convertDateFormat(startDate).isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Start date cannot be before current date");
+        }
+        this.startDate = convertDateFormat(startDate);
 
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
     }
 
     public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
+    
+    public void setEndDate(String endDate) {
+        if (convertDateFormat(endDate).isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("End date cannot be before current date");
+        }
+        if (convertDateFormat(endDate).isBefore(this.startDate)) {
+            throw new IllegalArgumentException("End date cannot be before start date");
+        }
+        this.endDate = convertDateFormat(endDate);
     }
 
     public String getDealCode() {
@@ -59,6 +88,9 @@ public class Deal {
     }
 
     public void setDealCode(String dealCode) {
+        if (dealModifier > 1) {
+            throw new IllegalArgumentException("Deal Modifier cannot be greater than 1");
+        }
         this.dealCode = dealCode;
     }
 
@@ -75,17 +107,30 @@ public class Deal {
     //Debugging
     public void print() {
         System.out.printf("Deal Modifier: %.2f\n", this.dealModifier);
+        System.out.println("Test Date: " + LocalDateTime.now());
         System.out.printf("Start Date: %s\n", this.startDate);
         System.out.printf("End Date: %s\n", this.endDate);
         System.out.printf("Deal Code: %s\n", this.dealCode);
     }
 
     public static void main(String[] args) {
-        Deal deal = new Deal();
+
+        
+        System.out.println("Valid Dates");
+        Deal deal = new Deal(0.7f, "10-01-2026 12:00", "10-08-2027 12:00", "deal");
         deal.print();
 
-        System.out.println();
-        Deal deal2 = new Deal(1.5f, "10-01-2020 12:00", "10-08-2020 12:00", "deal");
+        //Write a deal object with invalid dates
+        System.out.println("Invalid End Date");
+        Deal deal2 = new Deal(0.7f, "03-18-2025 12:00", "10-08-2020 12:00", "deal");
         deal2.print();
+
+        System.out.println("Invalid Start Date");
+        Deal deal3 = new Deal(0.7f, "10-08-2020 12:00", "10-01-2026 12:00", "deal");
+        deal3.print();
+
+        System.out.println("Invalid Deal Modifier");
+        Deal deal4 = new Deal(1.5f, "10-01-2020 12:00", "10-08-2020 12:00", "deal");
+        deal4.print();
     }
 }
