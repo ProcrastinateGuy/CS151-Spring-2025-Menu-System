@@ -2,10 +2,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 /**
  *  Deal Object that should work on both individual items and orders
- * 
- */
+*/
 public class Deal {
-    
+
     private float dealModifier; // Self explanatory, affects price of item/order
     private LocalDateTime startDate; // Date when deal starts
     private LocalDateTime endDate; // Date when deal ends
@@ -39,7 +38,8 @@ public class Deal {
         return startDate;
     }
 
-    //Dates should be 
+
+
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
@@ -47,7 +47,7 @@ public class Deal {
     public LocalDateTime getEndDate() {
         return endDate;
     }
-    
+
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }

@@ -25,10 +25,6 @@ public class IncomingReview extends Review {
 
     @Override
     public void writeReview() {
-        if (isDeleted) {
-            System.out.println("This review has been deleted.");
-            return;
-        }
         System.out.println("----- Incoming Review -----");
         System.out.println("By: " + customerAccount.getCustomerName() + " on " + reviewDate);
         System.out.println("Rating: " + rating + " (Flagged: " + isFlaggedForModeration + ")");

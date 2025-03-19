@@ -1,11 +1,17 @@
-public class DealManager implements ManagerInterface <Deal>{
+// deal manager
+import java.util.UUID;
+
+
+public class DealManager implements ManagerInterface <Deal> {
     @Override
-    public String generateID(String arg1, String arg2, String arg3) {
-        return "";
+    public String generateID( ) {
+        UUID uniqueID = UUID.randomUUID();
+        return "deal".concat(uniqueID.toString());
     }
 
     @Override
-    public String getID() {
+    public String getID(Deal orderToCheck) {
+
         return "";
     }
 
@@ -13,4 +19,6 @@ public class DealManager implements ManagerInterface <Deal>{
     public Deal getMember(String memberID) {
         return null;
     }
+}
+
 }

@@ -1,16 +1,30 @@
+//Review Manager
+import java.util.HashMap;
+import java.util.UUID;
+
 public class ReviewManager implements ManagerInterface <Review> {
+
+    HashMap<String, Review> reviewMap;
+    
     @Override
-    public String generateID(String arg1, String arg2, String arg3) {
+    public String generateID() {
+        UUID uniqueID = UUID.randomUUID();
+        return "deal".concat(uniqueID.toString());
+    }
+
+    @Override
+    public String getID(Review reviewToCheck) {
+
         return "";
     }
 
     @Override
-    public String getID() {
-        return "";
-    }
+    public Review getMember(String reviewID) {
 
-    @Override
-    public Review getMember(String memberID) {
         return null;
+    }
+
+    public void generateReview (){
+
     }
 }

@@ -1,14 +1,13 @@
 
 import java.time.LocalDateTime;
 
-public abstract class Review {
+public class Review {
 
     protected String reviewId;
     protected CustomerAccount customerAccount;
     protected double rating;
     protected String reviewText;
     protected LocalDateTime reviewDate;
-    protected boolean isDeleted = false; // Flag to indicate if this review is deleted or not
 
     public Review(String reviewId, CustomerAccount customerAccount, double rating, String reviewText, LocalDateTime reviewDate) {
         this.reviewId = reviewId;
@@ -18,13 +17,13 @@ public abstract class Review {
         this.reviewDate = reviewDate;
     }
 
-    public abstract void writeReview();
+    public void writeReview() {
+        System.out.println("Review written by " + customerAccount.getCustomerName() + " on " + reviewDate);
+        System.out.println("Rating: " + rating);
+        System.out.println(reviewText);
+    }
 
     public void editReview(String newReviewText, double newRating) {
-        if (isDeleted) {
-            System.out.println("Cannot edit a deleted review.");
-            return;
-        }
         this.rating = newRating;
         this.reviewText = newReviewText;
         this.reviewDate = LocalDateTime.now();
@@ -34,15 +33,14 @@ public abstract class Review {
     }
 
     public void deleteReview() {
-        if (isDeleted) {
-            System.out.println("Review already deleted.");
-            return;
-        }
+        this.reviewId = null;
+        this.customerAccount = null;
+        this.rating = 0;
+        this.reviewText = null;
+        this.reviewDate = null;
         System.out.println("Review deleted by " + customerAccount.getCustomerName());
-        this.isDeleted = true;
     }
 
-    // ----*Getters*----
     public String getReviewId() {
         return reviewId;
     }
@@ -63,11 +61,6 @@ public abstract class Review {
         return reviewDate;
     }
 
-    public boolean isDeleted() {
-        return isDeleted;
-    }
-
-    // ----*Setters*----
     public void setReviewId(String reviewId) {
         this.reviewId = reviewId;
     }

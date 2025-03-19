@@ -1,6 +1,8 @@
+//Customer account
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class CustomerAccount implements ManagerInterface<CustomerAccount>{
@@ -62,12 +64,13 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
 
     //interface methods
     @Override
-    public String generateID(String name, String phone, String c) {
-        return "";
+    public String generateID() {
+        UUID uniqueID = UUID.randomUUID();
+        return "account".concat(uniqueID.toString());
     }
 
     @Override
-    public String getID() {
+    public String getID( CustomerAccount account ) {
         return customerID;
     }
 
@@ -102,7 +105,7 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         }
         if(phone.length() != 10) {
             System.out.println("phones should be exactly 10 digits," +
-                "don't use (), -, or white spaces");
+                    "don't use (), -, or white spaces");
             return false;
         }
         this.phone = phone;
