@@ -5,7 +5,9 @@ import java.util.UUID;
 public class ReviewManager implements ManagerInterface <Review> {
 
     HashMap<String, Review> reviewMap;
-    
+
+
+    // interface methods
     @Override
     public String generateID() {
         UUID uniqueID = UUID.randomUUID();
@@ -25,6 +27,10 @@ public class ReviewManager implements ManagerInterface <Review> {
     }
 
     public void generateReview (){
+
+    }
+
+    public /*undetermined return type*/  sortReview(){
 
     }
 }

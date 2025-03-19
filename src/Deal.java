@@ -10,7 +10,8 @@ public class Deal {
     private LocalDateTime endDate; // Date when deal ends
     private String dealCode; //Deal code to check if user inputs correct deal code
 
-    //Constructors
+    ////Constructors
+    //no argument constructor
     public Deal() {
         this.dealModifier = 1;
         this.startDate = LocalDateTime.now();
@@ -18,6 +19,7 @@ public class Deal {
         this.dealCode = "deal";
     }
 
+    //constructor
     public Deal(float dealModifier, String startDate, String endDate, String dealCode) {
         this.dealModifier = dealModifier;
         this.startDate = convertDateFormat(startDate);
