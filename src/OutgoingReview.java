@@ -30,10 +30,6 @@ public class OutgoingReview extends Review {
 
     @Override
     public void writeReview() {
-        if (isDeleted) {
-            System.out.println("This review has been deleted.");
-            return;
-        }
         System.out.println("----- Outcoming Review -----");
         System.out.println("Outgoing Review by " + customerAccount.getCustomerName() + " on " + reviewDate);
         System.out.println("Rating: " + rating + " (Verified: " + isVerifiedPurchase + ")");
