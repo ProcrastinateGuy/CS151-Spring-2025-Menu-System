@@ -1,5 +1,3 @@
-//deal
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 /**
@@ -8,7 +6,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deal {
 
-    private float dealModifier; // Self-explanatory, affects price of item/order
+    private float dealModifier; // Self explanatory, affects price of item/order
     private LocalDateTime startDate; // Date when deal starts
     private LocalDateTime endDate; // Date when deal ends
     private String dealCode; //Deal code to check if user inputs correct deal code
@@ -18,7 +16,7 @@ public class Deal {
         this.dealModifier = 1;
         this.startDate = LocalDateTime.now();
         this.endDate = LocalDateTime.now().plusDays(7);
-        this.dealCode = "default deal";
+        this.dealCode = "deal";
     }
 
     public Deal(float dealModifier, String startDate, String endDate, String dealCode) {
