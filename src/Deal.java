@@ -2,10 +2,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 /**
  *  Deal Object that should work on both individual items and orders
- * 
- */
+*/
 public class Deal {
-    
+
     private float dealModifier; // Self explanatory, affects price of item/order
     private LocalDateTime startDate; // Date when deal starts
     private LocalDateTime endDate; // Date when deal ends
@@ -64,11 +63,13 @@ public class Deal {
             throw new IllegalArgumentException("Start date cannot be before current date");
         }
         this.startDate = convertDateFormat(startDate);
+
     }
 
     public LocalDateTime getEndDate() {
         return endDate;
     }
+
     
     public void setEndDate(String endDate) {
         if (convertDateFormat(endDate).isBefore(LocalDateTime.now())) {
