@@ -70,11 +70,6 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     }
 
     @Override
-    public String getID( CustomerAccount account ) {
-        return customerID;
-    }
-
-    @Override
     public CustomerAccount getMember(String memberID) {
         return null;
     }
