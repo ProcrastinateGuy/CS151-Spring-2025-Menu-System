@@ -1,52 +1,47 @@
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Review {
+public abstract class Review {
 
     protected String reviewId;
-    protected CustomerAccount customerAccount;
+    protected String writerID;
+    protected String targetID;
     protected double rating;
     protected String reviewText;
     protected LocalDateTime reviewDate;
 
-    public Review(String reviewId, CustomerAccount customerAccount, double rating, String reviewText, LocalDateTime reviewDate) {
-        this.reviewId = reviewId;
-        this.customerAccount = customerAccount;
-        this.rating = rating;
-        this.reviewText = reviewText;
-        this.reviewDate = reviewDate;
+    ////constructors
+    // no argument constructor
+    public Review(){
+        setWriterID("default ID");
+        setTargetID("default ID");
+        setRating(-1.0);
+        setReviewText("default review");
+        setReviewDate(LocalDateTime.of(1500, 1, 1, 0, 0, 0));
     }
 
-    public void writeReview() {
-        System.out.println("Review written by " + customerAccount.getCustomerName() + " on " + reviewDate);
-        System.out.println("Rating: " + rating);
-        System.out.println(reviewText);
+    // constructor
+    public Review(String reviewId, String writerID, String targetID, double rating, String reviewText) {
+        setReviewId(reviewId);
+        setWriterID(writerID);
+        setTargetID(targetID);
+        setRating(rating);
+        setReviewText(reviewText);
     }
 
-    public void editReview(String newReviewText, double newRating) {
-        this.rating = newRating;
-        this.reviewText = newReviewText;
-        this.reviewDate = LocalDateTime.now();
-        System.out.println("Review edited by " + customerAccount.getCustomerName() + " on " + reviewDate);
-        System.out.println("Rating: " + rating);
-        System.out.println(reviewText);
-    }
-
-    public void deleteReview() {
-        this.reviewId = null;
-        this.customerAccount = null;
-        this.rating = 0;
-        this.reviewText = null;
-        this.reviewDate = null;
-        System.out.println("Review deleted by " + customerAccount.getCustomerName());
-    }
-
+    //getter and setter
+    //getters
     public String getReviewId() {
         return reviewId;
     }
 
-    public CustomerAccount getCustomerAccount() {
-        return customerAccount;
+    public String getWriterID() {
+        return writerID;
+    }
+
+    public String getTargetID() {
+        return targetID;
     }
 
     public double getRating() {
@@ -61,12 +56,17 @@ public class Review {
         return reviewDate;
     }
 
+    //setters
     public void setReviewId(String reviewId) {
         this.reviewId = reviewId;
     }
 
-    public void setCustomerAccount(CustomerAccount customerAccount) {
-        this.customerAccount = customerAccount;
+    public void setWriterID(String writerID) {
+        this.writerID = writerID;
+    }
+
+    public void setTargetID(String targetID) {
+        this.targetID = targetID;
     }
 
     public void setRating(double rating) {

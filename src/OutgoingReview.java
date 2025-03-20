@@ -5,8 +5,8 @@ public class OutgoingReview extends Review {
 
     protected boolean isVerifiedPurchase;
 
-    public OutgoingReview(String reviewId, CustomerAccount customerAccount, double rating, String reviewText, LocalDateTime reviewDate, boolean isVerifiedPurchase) {
-        super(reviewId, customerAccount, rating, reviewText, reviewDate);
+    public OutgoingReview(String reviewId, String customerAccountID, double rating, String reviewText, LocalDateTime reviewDate, boolean isVerifiedPurchase) {
+        super(reviewId, customerAccountID, rating, reviewText, reviewDate);
         this.isVerifiedPurchase = isVerifiedPurchase;
     }
 

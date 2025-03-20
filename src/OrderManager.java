@@ -2,6 +2,8 @@
 import java.util.UUID;
 
 public class OrderManager implements ManagerInterface <Order>{
+
+    // interface methods
     @Override
     public String generateID( ) {
         UUID uniqueID = UUID.randomUUID();
