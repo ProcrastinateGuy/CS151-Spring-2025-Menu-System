@@ -1,5 +1,3 @@
-
-
 public class Item {
     private int itemID;
     private String name;
@@ -29,7 +27,7 @@ public class Item {
         return quantity;
     }
 
-    public double applyDiscount() {
+    public double applyDeal() {
         return price - (price * discount / 100.0);
     }
 
@@ -42,6 +40,6 @@ public class Item {
                 ", Quantity: " + quantity + "\n" +
                 ", Category: " + category + "\n" +
                 ", Discount: " + discount + "%" + "\n" +
-                ", Final Price: $ " + applyDiscount() + "\n";
+                ", Final Price: $ " + applyDeal() + "\n";
     }
 }

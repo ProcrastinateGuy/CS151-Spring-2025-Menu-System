@@ -15,7 +15,7 @@ public class Order {
     }
     public void addItem(Item item) {
         itemList.add(item);
-        subtotal += item.applyDiscount() * item.getQuantity();
+        subtotal += item.applyDeal() * item.getQuantity();
     }
     public double getSubtotal() {
         return subtotal;

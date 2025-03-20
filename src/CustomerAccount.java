@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class CustomerAccount implements ManagerInterface<CustomerAccount>{
+public class CustomerAccount {
 
     //member list
     private String customerID = "default ID";
@@ -17,9 +17,7 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     private String InterestedCategory = "default interest";
     private LocalDate dateOfBirth = LocalDate.of(1500, 1, 1);
 
-
     private String versionNumber = "default versionNumber";
-
 
     //status of an account
     private boolean suspended = false;
@@ -30,16 +28,14 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     //a list of item ID for storing the customers favorites
     private List<Integer> favorites;
 
-
-
     private int rewardPoints = 0;
     private double totalSavings = 0.0;
 
 
     // member class
-    private DealManager dealManager;
-    private OrderManager orderManager;
-    private ReviewManager reviewManager;
+    private DealManager dealManager = new DealManager();
+    private OrderManager orderManager = new OrderManager();
+    private ReviewManager reviewManager = new ReviewManager();
 
 
     //no argument Constructor
@@ -61,18 +57,6 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         // all other values remain as default
     }
 
-
-    //interface methods
-    @Override
-    public String generateID() {
-        UUID uniqueID = UUID.randomUUID();
-        return "account".concat(uniqueID.toString());
-    }
-
-    @Override
-    public CustomerAccount getMember(String memberID) {
-        return null;
-    }
 
     //setter
 
@@ -178,6 +162,7 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         return customerName;
     }
 
+    public String getCustomerID(){ return customerID; }
     public String getEmail() {
         return email;
     }
