@@ -22,14 +22,14 @@ public class DealManager implements ManagerInterface <Deal> {
     }
 
     @Override
-    public String getID(Deal orderToCheck) {
+    public Deal getMember(String dealCode) {
 
-        return "";
-    }
-
-    @Override
-    public Deal getMember(String memberID) {
-        return null;
+        // check if the key is in the map
+        if(!dealsMap.containsKey(dealCode)){
+            System.out.println("Member not found");
+            return null;
+        }
+        return dealsMap.get(dealCode);
     }
 
 
@@ -37,28 +37,25 @@ public class DealManager implements ManagerInterface <Deal> {
     public void generateDeal(float dealModifier, String startDate, String endDate) throws InvalidArgumentException, IllegalArgumentException, KeyAlreadyExistsException {
 
         String ID = generateID();
-        try {
-
+        exceptionHandling(() -> {
             Deal deal = new Deal( dealModifier, startDate, endDate, ID);
             dealsMap.put( ID, new Deal());
-
-        }catch(InvalidArgumentException e){
-            System.out.println("One or more date String passed in is not formatted correctly");
-            System.out.println("Date String Format: MM-dd-yyyy H:m");
-            System.err.println(e.getMessage());
-
-        }catch(IllegalArgumentException e){
-            System.out.println();
-            System.err.println(e.getMessage());
-        }
+        });
 
     }
     // overloaded, generating a deal with custom ID provided
     public void generateDeal(float dealModifier, String startDate, String endDate, String customID) throws InvalidArgumentException, KeyAlreadyExistsException{
-        try {
-
+        exceptionHandling(() -> {
             Deal deal = new Deal( dealModifier, startDate, endDate, customID);
             dealsMap.put( customID, new Deal());
+        });
+
+    }
+
+    // this method handles exceptions when creating a deal
+    private void exceptionHandling (Runnable oprn){
+        try {
+            oprn.run();
 
         }catch (KeyAlreadyExistsException e){
             System.out.println("Duplicate deal code detected, failed to create deal");
@@ -67,13 +64,10 @@ public class DealManager implements ManagerInterface <Deal> {
             System.out.println("One or more date String passed in is not formatted correctly");
             System.out.println("Date String Format: MM-dd-yyyy H:m");
             System.err.println(e.getMessage());
-
+        }catch(Exception e){
+            System.out.println("Unexpected exception occurred");
+            e.printStackTrace();
         }
-
-    }
-
-    private void exceptionHandling (Runnable oprn){
-
     }
 }
 

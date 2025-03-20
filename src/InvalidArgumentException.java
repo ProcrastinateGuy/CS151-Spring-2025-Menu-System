@@ -3,7 +3,7 @@
 // invalid arguments such as creating a deal object with
 // the end date earlier than the start date
 
-public class InvalidArgumentException extends RuntimeException {
+public class  InvalidArgumentException extends RuntimeException {
 
     // String message;
 

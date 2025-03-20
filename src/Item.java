@@ -32,6 +32,8 @@ public class Item {
     public double applyDiscount() {
         return price - (price * discount / 100.0);
     }
+
+    @Override
     public String toString(){
         return  "Item Info: \n" +
                 "Item ID: " + itemID + "\n" +
