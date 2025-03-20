@@ -1,6 +1,6 @@
 
-
 public class Item {
+
     private int itemID;
     private String name;
     private double price;
@@ -16,32 +16,36 @@ public class Item {
         this.category = category;
         this.discount = discount;
     }
+
     public int getItemID() {
         return itemID;
     }
+
     public String getName() {
         return name;
     }
+
     public double getPrice() {
         return price;
     }
+
     public int getQuantity() {
         return quantity;
     }
 
-    public double applyDiscount() {
+    public double applyDeal() {
         return price - (price * discount / 100.0);
     }
 
     @Override
-    public String toString(){
-        return  "Item Info: \n" +
-                "Item ID: " + itemID + "\n" +
-                ", Name: " + name + "\n" +
-                ", Price: $" + price + "\n" +
-                ", Quantity: " + quantity + "\n" +
-                ", Category: " + category + "\n" +
-                ", Discount: " + discount + "%" + "\n" +
-                ", Final Price: $ " + applyDiscount() + "\n";
+    public String toString() {
+        return "Item Info: \n"
+                + "Item ID: " + itemID + "\n"
+                + ", Name: " + name + "\n"
+                + ", Price: $" + price + "\n"
+                + ", Quantity: " + quantity + "\n"
+                + ", Category: " + category + "\n"
+                + ", Discount: " + discount + "%" + "\n"
+                + ", Final Price: $ " + applyDeal() + "\n";
     }
 }

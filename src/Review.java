@@ -1,47 +1,60 @@
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public abstract class Review {
 
     protected String reviewId;
-    protected String writerID;
-    protected String targetID;
+    protected CustomerAccount writer;
+    protected CustomerAccount target;
+
     protected double rating;
     protected String reviewText;
     protected LocalDateTime reviewDate;
 
+    protected boolean edited;
+
     ////constructors
     // no argument constructor
-    public Review(){
-        setWriterID("default ID");
-        setTargetID("default ID");
+    public Review() {
+        CustomerAccount defaultCustomer = new CustomerAccount();
+        setReviewId("-1");
+        setWriter(defaultCustomer);
+        setTarget(defaultCustomer);
         setRating(-1.0);
         setReviewText("default review");
         setReviewDate(LocalDateTime.of(1500, 1, 1, 0, 0, 0));
     }
 
     // constructor
-    public Review(String reviewId, String writerID, String targetID, double rating, String reviewText) {
+    public Review(String reviewId, CustomerAccount writer, CustomerAccount target,
+            double rating, String reviewText, LocalDateTime reviewDate) {
         setReviewId(reviewId);
-        setWriterID(writerID);
-        setTargetID(targetID);
+        setWriter(writer);
+        setTarget(target);
         setRating(rating);
         setReviewText(reviewText);
+        setReviewDate(LocalDateTime.of(1500, 1, 1, 0, 0, 0));
+    }
+
+    protected void printReview() {
+        System.out.println("Reviewed by " + getWriterName() + " on "
+                + getReviewDate().toString());
+        System.out.print("Rating: " + getRating());
+        System.out.println("Review:" + reviewText);
     }
 
     //getter and setter
     //getters
-    public String getReviewId() {
+    public String getReviewID() {
         return reviewId;
     }
 
     public String getWriterID() {
-        return writerID;
+        return writer.getCustomerID();
     }
 
     public String getTargetID() {
-        return targetID;
+        return target.getCustomerID();
     }
 
     public double getRating() {
@@ -56,17 +69,29 @@ public abstract class Review {
         return reviewDate;
     }
 
+    public String getWriterName() {
+        return writer.getCustomerName();
+    }
+
+    public String getTargetName() {
+        return target.getCustomerName();
+    }
+
+    public boolean isEdited() {
+        return edited;
+    }
+
     //setters
     public void setReviewId(String reviewId) {
         this.reviewId = reviewId;
     }
 
-    public void setWriterID(String writerID) {
-        this.writerID = writerID;
+    public void setWriter(CustomerAccount writer) {
+        this.writer = writer;
     }
 
-    public void setTargetID(String targetID) {
-        this.targetID = targetID;
+    public void setTarget(CustomerAccount target) {
+        this.target = target;
     }
 
     public void setRating(double rating) {
@@ -79,5 +104,9 @@ public abstract class Review {
 
     public void setReviewDate(LocalDateTime reviewDate) {
         this.reviewDate = reviewDate;
+    }
+
+    public void setEdited(boolean edited) {
+        this.edited = edited;
     }
 }

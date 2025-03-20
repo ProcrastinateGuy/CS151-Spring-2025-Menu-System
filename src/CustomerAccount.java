@@ -1,11 +1,10 @@
 //Customer account
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
-
-public class CustomerAccount implements ManagerInterface<CustomerAccount>{
+public class CustomerAccount {
 
     //member list
     private String customerID = "default ID";
@@ -17,9 +16,7 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     private String InterestedCategory = "default interest";
     private LocalDate dateOfBirth = LocalDate.of(1500, 1, 1);
 
-
     private String versionNumber = "default versionNumber";
-
 
     //status of an account
     private boolean suspended = false;
@@ -30,17 +27,13 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     //a list of item ID for storing the customers favorites
     private List<Integer> favorites;
 
-
-
     private int rewardPoints = 0;
     private double totalSavings = 0.0;
 
-
     // member class
-    private DealManager dealManager;
-    private OrderManager orderManager;
-    private ReviewManager reviewManager;
-
+    private DealManager dealManager = new DealManager();
+    private OrderManager orderManager = new OrderManager();
+    private ReviewManager reviewManager = new ReviewManager();
 
     //no argument Constructor
     //important values are set to -1 to distinguish invalid user
@@ -54,32 +47,18 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
 
     //name and phone
     //initialize with only name and phone number
-    public CustomerAccount(String customerName, String phone){
+    public CustomerAccount(String customerName, String phone) {
         setCustomerName(customerName);
         setPhone(phone);
 
         // all other values remain as default
     }
 
-
-    //interface methods
-    @Override
-    public String generateID() {
-        UUID uniqueID = UUID.randomUUID();
-        return "account".concat(uniqueID.toString());
-    }
-
-    @Override
-    public CustomerAccount getMember(String memberID) {
-        return null;
-    }
-
     //setter
-
     // return value: true: set successful
     // false: set operation failed
     public boolean setCustomerName(String customerName) {
-        if(customerName.matches(".*[^A-z0-9 ].*")) { // this regex allows white spaces
+        if (customerName.matches(".*[^A-z0-9 ].*")) { // this regex allows white spaces
             System.out.println("names should only contain alphabet, spaces, or numbers");
             return false;
         }
@@ -94,13 +73,13 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     }
 
     public boolean setPhone(String phone) {
-        if(phone.matches("[^0-9]")) {
+        if (phone.matches("[^0-9]")) {
             System.out.println("phones should only contain numbers");
             return false;
         }
-        if(phone.length() != 10) {
-            System.out.println("phones should be exactly 10 digits," +
-                    "don't use (), -, or white spaces");
+        if (phone.length() != 10) {
+            System.out.println("phones should be exactly 10 digits,"
+                    + "don't use (), -, or white spaces");
             return false;
         }
         this.phone = phone;
@@ -159,7 +138,6 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         this.totalSavings = totalSavings;
     }
 
-
     public void setDealManager(DealManager dealManager) {
         this.dealManager = dealManager;
     }
@@ -173,9 +151,12 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     }
 
     //getter
-
     public String getCustomerName() {
         return customerName;
+    }
+
+    public String getCustomerID() {
+        return customerID;
     }
 
     public String getEmail() {
@@ -234,8 +215,6 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
         return totalSavings;
     }
 
-
-
     public DealManager getDealManager() {
         return dealManager;
     }
@@ -247,6 +226,5 @@ public class CustomerAccount implements ManagerInterface<CustomerAccount>{
     public ReviewManager getReviewManager() {
         return reviewManager;
     }
-
 
 }
