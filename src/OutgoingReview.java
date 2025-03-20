@@ -5,8 +5,18 @@ public class OutgoingReview extends Review {
 
     protected boolean isVerifiedPurchase;
 
-    public OutgoingReview(String reviewId, String customerAccountID, double rating, String reviewText, LocalDateTime reviewDate, boolean isVerifiedPurchase) {
-        super(reviewId, customerAccountID, rating, reviewText, reviewDate);
+    ////constructors
+    //no argument constructor
+    public OutgoingReview(){
+        super();
+        isVerifiedPurchase = false;
+    }
+
+    //constructor
+    public OutgoingReview(String reviewId, CustomerAccount writer, CustomerAccount target,
+                          double rating, String reviewText, LocalDateTime reviewDate,
+                          boolean isVerifiedPurchase) {
+        super(reviewId, writer, target, rating, reviewText, reviewDate );
         this.isVerifiedPurchase = isVerifiedPurchase;
     }
 
@@ -18,22 +28,37 @@ public class OutgoingReview extends Review {
         isVerifiedPurchase = verifiedPurchase;
     }
 
-    public void markAsVerified() {
+    public void markAsVerified(CustomerAccount reviewer) {
         this.isVerifiedPurchase = true;
-        System.out.println("Review approved by " + customerAccount.getCustomerName());
+        System.out.println("Review approved by " + reviewer.getCustomerName());
     }
 
-    public void markAsUnverified() {
+    public void markAsUnverified(CustomerAccount reviewer) {
         this.isVerifiedPurchase = false;
-        System.out.println("Review rejected by " + customerAccount.getCustomerName());
+        System.out.println("Review rejected by " + reviewer.getCustomerName());
+    }
+
+    public void editReview(String newReviewText, double newRating) {
+        super.setReviewText(newReviewText);
+        super.setRating(newRating);
+        super.setReviewDate(LocalDateTime.now());
+        super.setEdited(true);
+    }
+
+    public void deleteReview() {
+        setWriter(null);
+        setTarget(null);
+        setRating(-1.0);
+        setReviewText(null);
+        setReviewDate(null);
     }
 
     @Override
-    public void writeReview() {
-        System.out.println("----- Outcoming Review -----");
-        System.out.println("Outgoing Review by " + customerAccount.getCustomerName() + " on " + reviewDate);
-        System.out.println("Rating: " + rating + " (Verified: " + isVerifiedPurchase + ")");
-        System.out.println("Comment:" + reviewText);
+    public void printReview() {
+        System.out.println("----- Outgoing Review -----");
+        System.out.println(
+            (isVerifiedPurchase) ? " -** Verified Purchase **- " : " -** Unverified **- " );
+        super.printReview();
         System.out.println("----------------------------");
     }
 }
