@@ -11,12 +11,6 @@ public class OrderManager implements ManagerInterface <Order>{
     }
 
     @Override
-    public String getID(Order orderToCheck) {
-
-        return "";
-    }
-
-    @Override
     public Order getMember(String memberID) {
         return null;
     }
