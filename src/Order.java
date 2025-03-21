@@ -83,12 +83,9 @@ public class Order {
 
     //getters
     public double getSubtotal() {
-        double totalForThisItem = 0.0;
-        double taxRatio = 1.09375;
         for (Item item : itemMap.values()) {
-            totalForThisItem = item.getQuantity()* item.getDiscountedPrice();
-            if(item.isTaxable()) {totalForThisItem *= taxRatio;}
-            subtotal += totalForThisItem;
+
+            subtotal += item.getDiscountedPriceAfterTax();
         }
 
         //deep copy

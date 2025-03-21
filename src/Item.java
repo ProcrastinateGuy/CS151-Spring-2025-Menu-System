@@ -1,3 +1,5 @@
+import java.math.*;
+
 public class Item {
     private String itemID;
     private String name;
@@ -6,6 +8,7 @@ public class Item {
     private String category;
     private int discount;
     private boolean taxable;
+    private double taxRate = 1.09375;
 
     public Item() {
         setItemID("-1");
@@ -42,6 +45,11 @@ public class Item {
     }
 
     public void setPrice(double price) {
+        if(price < 0) {
+            System.out.println("Price cannot be negative");
+            return;
+        }
+
         this.price = price;
     }
 
@@ -70,7 +78,13 @@ public class Item {
         this.taxable = taxable;
     }
 
-
+    public void setTaxRate(double taxRate) {
+        if(taxRate < 0 || taxRate > 1) {
+            System.out.println("Invalid tax Rate");
+        }else{
+            this.taxRate = taxRate;
+        }
+    }
 
     public String getItemID() {
         return itemID;
@@ -84,8 +98,27 @@ public class Item {
 
     public double getDiscountedPrice() {
         //deep copy
-        return Double.valueOf( (price *= (1 - (discount/100.0)))) ;
+        return Double.valueOf( (price * (1 - (discount/100.0))) ) ;
     }
+
+    public double getFullPriceAfterTax() {
+        double fullPriceAfterTax = 0.0;
+        if (taxable) {
+            fullPriceAfterTax = price * taxRate;
+            return fullPriceAfterTax;
+        }
+        return getFullPrice();
+    }
+
+    public double getDiscountedPriceAfterTax() {
+        double DiscountedPriceAfterTax = 0.0;
+        if (taxable) {
+            DiscountedPriceAfterTax = getDiscountedPrice() * taxRate;
+            return DiscountedPriceAfterTax;
+        }
+        return getDiscountedPrice();
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -106,15 +139,20 @@ public class Item {
         return Boolean.valueOf(taxable);
     }
 
+    public double getTaxRate() {
+        return Double.valueOf( (taxRate) );
+    }
+
     @Override
     public String toString(){
         return  "Item Info: \n" +
-                "Item ID: " + itemID + "\n" +
-                ", Name: " + name + "\n" +
-                ", Price: $" + price + "\n" +
-                ", Quantity: " + quantity + "\n" +
-                ", Category: " + category + "\n" +
-                ", Discount: " + discount + "%" + "\n" +
-                ", Final Price: $ " + getDiscountedPrice() + "\n";
+                "Item ID: " + itemID +
+                ", Name: " + name +
+                ", Price: $" + price +
+                ", Quantity: " + quantity +
+                ", Category: " + category +
+                ", Discount: " + discount + "%" +
+                ", Discounted Price: $ " + new BigDecimal(getDiscountedPrice()).setScale(2, RoundingMode.FLOOR)+
+                ", Discounted Price After Tax: $ " + new BigDecimal(getDiscountedPriceAfterTax()).setScale(2, RoundingMode.FLOOR);
     }
 }

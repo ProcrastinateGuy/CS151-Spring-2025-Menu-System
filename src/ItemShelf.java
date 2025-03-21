@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class ItemShelf{
 
-    private HashMap<String, Item> itemShelf;
+    private HashMap<String, Item> itemShelf = new HashMap<>();
 
     /**
      * Default constructor - Creates Empty Item ArrayList
@@ -110,5 +110,10 @@ public class ItemShelf{
         return null; // Return null if item not found
     }
 
+    public void printAllItems(){
+        for (Item item : itemShelf.values()) {
+            System.out.println(item.toString());
+        }
+    }
 
 }

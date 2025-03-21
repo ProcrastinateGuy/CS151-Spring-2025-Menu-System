@@ -1,4 +1,5 @@
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +12,13 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ReviewManager reviewManager = new ReviewManager();  // Instantiate the ReviewManager
+        //ReviewManager reviewManager = new ReviewManager();  // Instantiate the ReviewManager
+        ItemShelf shelf = null;
+        try {
+             shelf = new ItemShelf(".\\src\\itemDB.txt");
+        }catch(IOException e) {
+            System.out.println("Error reading file");
+        }
 
         boolean exit = false;
         while (!exit) {
@@ -41,7 +48,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
-                    MenuItemsReader.readMenuItems();
+                    shelf.printAllItems();
                     System.out.print("\nPress Enter to return to the main menu...");
                     scanner.nextLine();
                     break;
@@ -69,7 +76,7 @@ public class Main {
                     boolean isVerifiedPurchase = Boolean.parseBoolean(scanner.nextLine());
                     System.out.println();
 
-                    reviewManager.writeReview(writerID, targetID, rating, reviewText, isVerifiedPurchase);
+                    //reviewManager.writeReview(writerID, targetID, rating, reviewText, isVerifiedPurchase);
                     System.out.print("\nPress Enter to return to the main menu...");
                     scanner.nextLine();
                     break;
@@ -78,6 +85,7 @@ public class Main {
                     System.out.print("View (1) Incoming reviews or (2) Outgoing reviews? ");
                     String reviewType = scanner.nextLine();
                     System.out.println();
+                    /*
                     if (reviewType.equals("1")) {
                         reviewManager.viewAllReviews(true);
                     } else if (reviewType.equals("2")) {
@@ -85,6 +93,8 @@ public class Main {
                     } else {
                         System.out.println("Invalid choice for review type.");
                     }
+                    */
+
                     System.out.print("\nPress Enter to return to the main menu...");
                     scanner.nextLine();
                     break;
