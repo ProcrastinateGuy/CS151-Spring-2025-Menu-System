@@ -20,7 +20,7 @@ public class ItemShelf{
                 values = line.split(",");
                 Item item = new Item(values[0], values[1],
                     Double.parseDouble(values[2]), Integer.parseInt(values[3]),
-                    values[4], Integer.parseInt(values[5]));
+                    values[4], Integer.parseInt(values[5]), Boolean.parseBoolean(values[6]));
 
                 itemShelf.put(values[0], item);
 
