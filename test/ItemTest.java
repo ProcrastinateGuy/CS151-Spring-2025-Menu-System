@@ -11,7 +11,7 @@ public class ItemTest {
     @Test
     public void itemListCreationTest() throws IOException {
         ItemShelf itemShelf = new ItemShelf(".\\src\\itemDB.txt");
-        Item burger = new Item("1","Burger",5.99,2,"FastFood",10);
+        Item burger = new Item("1","Burger",5.99,2,"FastFood",10, );
 //        assertAll(() ->{
                 assertEquals("Deli_Burger", itemShelf.getItemName("Deli_Burger").getName());
 

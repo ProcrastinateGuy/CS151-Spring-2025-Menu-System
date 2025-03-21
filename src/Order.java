@@ -12,7 +12,7 @@ public class Order {
 
     ////constructors
     //no argument
-    public Order() throws IOException {
+    public Order(){
         setCustomerID("default ID");
         setOrderID("default orderID");
         setSubtotal(0);
@@ -83,8 +83,12 @@ public class Order {
 
     //getters
     public double getSubtotal() {
+        double totalForThisItem = 0.0;
+        double taxRatio = 1.09375;
         for (Item item : itemMap.values()) {
-            subtotal += item.getQuantity()* item.getDiscountedPrice();
+            totalForThisItem = item.getQuantity()* item.getDiscountedPrice();
+            if(item.isTaxable()) {totalForThisItem *= taxRatio;}
+            subtotal += totalForThisItem;
         }
 
         //deep copy

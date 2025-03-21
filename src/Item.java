@@ -14,17 +14,19 @@ public class Item {
         setQuantity(0);
         setCategory("default category");
         setDiscount(0);
+        setTaxable(false);
 
     }
 
-    public Item(String itemID, String name, double price, int quantity, String category, int discount) {
+    public Item(String itemID, String name, double price, int quantity,
+                String category, int discount, boolean taxable) {
         setItemID(itemID);
         setName(name);
         setPrice(price);
         setQuantity(quantity);
         setCategory(category);
         setDiscount(discount);
-
+        setTaxable(taxable);
     }
 
     public void incrementQuantity(int quantityToAdd) {
