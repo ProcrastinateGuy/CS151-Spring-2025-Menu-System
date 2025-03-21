@@ -17,9 +17,9 @@ public class Main {
         while (!exit) {
             clearScreen(); // Clear screen at the beginning of each iteration
             System.out.println("=======================================");
-            System.out.println("         Food Order System            ");
+            System.out.println("         Food Ordering System            ");
             System.out.println("=======================================");
-            System.out.println("1. View Menu Items");
+            System.out.println("1. View Menu ItemShelf");
             System.out.println("2. Place an Order");
             System.out.println("3. View Deals");
             System.out.println("4. Write a Review");

@@ -39,7 +39,7 @@ public class DealManager implements ManagerInterface <Deal> {
         String ID = generateID();
         exceptionHandling(() -> {
             Deal deal = new Deal( dealModifier, startDate, endDate, ID);
-            dealsMap.put( ID, new Deal());
+            dealsMap.put( ID, deal);
         });
 
     }
@@ -47,7 +47,7 @@ public class DealManager implements ManagerInterface <Deal> {
     public void generateDeal(float dealModifier, String startDate, String endDate, String customID) throws InvalidArgumentException, KeyAlreadyExistsException{
         exceptionHandling(() -> {
             Deal deal = new Deal( dealModifier, startDate, endDate, customID);
-            dealsMap.put( customID, new Deal());
+            dealsMap.put( customID, deal);
         });
 
     }
