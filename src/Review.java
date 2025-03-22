@@ -1,52 +1,57 @@
 
 import java.time.LocalDateTime;
 
-public class Review {
+public abstract class Review {
 
     protected String reviewId;
-    protected CustomerAccount customerAccount;
+    protected CustomerAccount writer;
+    protected CustomerAccount target;
+
     protected double rating;
     protected String reviewText;
     protected LocalDateTime reviewDate;
 
-    public Review(String reviewId, CustomerAccount customerAccount, double rating, String reviewText, LocalDateTime reviewDate) {
-        this.reviewId = reviewId;
-        this.customerAccount = customerAccount;
-        this.rating = rating;
-        this.reviewText = reviewText;
-        this.reviewDate = reviewDate;
+    protected boolean edited;
+    ////constructors
+    // no argument constructor
+    public Review(){
+        CustomerAccount defaultCustomer = new CustomerAccount();
+        setReviewId("-1");
+        setWriter(defaultCustomer);
+        setTarget(defaultCustomer);
+        setRating(-1.0);
+        setReviewText("default review");
+        setReviewDate(LocalDateTime.of(1500, 1, 1, 0, 0, 0));
     }
 
-    public void writeReview() {
-        System.out.println("Review written by " + customerAccount.getCustomerName() + " on " + reviewDate);
-        System.out.println("Rating: " + rating);
-        System.out.println(reviewText);
+    // constructor
+    public Review(String reviewId, CustomerAccount writer, CustomerAccount target,
+                  double rating, String reviewText, LocalDateTime reviewDate) {
+        setReviewId(reviewId);
+        setWriter(writer);
+        setTarget(target);
+        setRating(rating);
+        setReviewText(reviewText);
+        setReviewDate(LocalDateTime.of(1500, 1, 1, 0, 0, 0));
     }
-
-    public void editReview(String newReviewText, double newRating) {
-        this.rating = newRating;
-        this.reviewText = newReviewText;
-        this.reviewDate = LocalDateTime.now();
-        System.out.println("Review edited by " + customerAccount.getCustomerName() + " on " + reviewDate);
-        System.out.println("Rating: " + rating);
-        System.out.println(reviewText);
-    }
-
-    public void deleteReview() {
-        this.reviewId = null;
-        this.customerAccount = null;
-        this.rating = 0;
-        this.reviewText = null;
-        this.reviewDate = null;
-        System.out.println("Review deleted by " + customerAccount.getCustomerName());
-    }
-
-    public String getReviewId() {
+    protected void printReview(){
+        System.out.println("Reviewed by " + getWriterName() + " on "
+                            + getReviewDate().toString());
+        System.out.print("Rating: " + getRating());
+        System.out.println("Review:" + reviewText);
+        }
+    //getter and setter
+    //getters
+    public String getReviewID() {
         return reviewId;
     }
 
-    public CustomerAccount getCustomerAccount() {
-        return customerAccount;
+    public String getWriterID() {
+        return writer.getCustomerID();
+    }
+
+    public String getTargetID() {
+        return target.getCustomerID();
     }
 
     public double getRating() {
@@ -60,13 +65,24 @@ public class Review {
     public LocalDateTime getReviewDate() {
         return reviewDate;
     }
+    public String getWriterName() { return writer.getCustomerName(); }
+    public String getTargetName() { return target.getCustomerName(); }
 
+    public boolean isEdited() {
+        return edited;
+    }
+
+    //setters
     public void setReviewId(String reviewId) {
         this.reviewId = reviewId;
     }
 
-    public void setCustomerAccount(CustomerAccount customerAccount) {
-        this.customerAccount = customerAccount;
+    public void setWriter(CustomerAccount writer) {
+        this.writer = writer;
+    }
+
+    public void setTarget(CustomerAccount target) {
+        this.target = target;
     }
 
     public void setRating(double rating) {
@@ -79,5 +95,9 @@ public class Review {
 
     public void setReviewDate(LocalDateTime reviewDate) {
         this.reviewDate = reviewDate;
+    }
+
+    public void setEdited(boolean edited) {
+        this.edited = edited;
     }
 }

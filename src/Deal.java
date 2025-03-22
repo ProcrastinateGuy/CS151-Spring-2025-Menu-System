@@ -1,89 +1,93 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 /**
  *  Deal Object that should work on both individual items and orders
 */
 public class Deal {
 
-    private float dealModifier; // Self explanatory, affects price of item/order
+    private float dealModifier; // a float value multiplies with the price of item/order
     private LocalDateTime startDate; // Date when deal starts
     private LocalDateTime endDate; // Date when deal ends
     private String dealCode; //Deal code to check if user inputs correct deal code
 
-    //Constructors
+    ////Constructors
+    //no argument constructor
     public Deal() {
-        this.dealModifier = 1;
-        this.startDate = LocalDateTime.now();
-        this.endDate = LocalDateTime.now().plusDays(7);
-        this.dealCode = "deal";
+        setDealModifier(1);
+        setStartDate(LocalDateTime.now().toString());
+        setEndDate(LocalDateTime.now().toString());
+        setDealCode("default deal");
     }
 
+    //constructor
     public Deal(float dealModifier, String startDate, String endDate, String dealCode) {
-        this.dealModifier = dealModifier;
-        this.startDate = convertDateFormat(startDate);
-        this.endDate = convertDateFormat(endDate);
-        this.dealCode = dealCode;
+        setDealModifier(dealModifier);
+        setStartDate(startDate);
+        setEndDate(endDate);
+        setDealCode(dealCode);
     }
 
     //Setters and Getters
-    public float getDealModifier() {
-        return dealModifier;
-    }
-
+    //setters
     public void setDealModifier(float dealModifier) {
+        if (dealModifier > 1) {
+            throw new IllegalArgumentException("Deal Modifier cannot be greater than 1");
+        }
         this.dealModifier = dealModifier;
     }
 
-    public LocalDateTime getStartDate() {
-        return startDate;
+    public void setStartDate(String startDate) {
+
+        if (convertDateFormat(startDate).isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Start date cannot be before current date");
+        }
+        this.startDate = convertDateFormat(startDate);
+
     }
 
-
-
-    public void setStartDate(LocalDateTime startDate) {
-        this.startDate = startDate;
+    public void setEndDate(String endDate) {
+        if (convertDateFormat(endDate).isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("End date cannot be before current date");
+        }
+        if (convertDateFormat(endDate).isBefore(this.startDate)) {
+            throw new IllegalArgumentException("End date cannot be before start date");
+        }
+        this.endDate = convertDateFormat(endDate);
     }
 
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getDealCode() {
-        return dealCode;
-    }
 
     public void setDealCode(String dealCode) {
+        if (dealModifier > 1) {
+            throw new IllegalArgumentException("Deal Modifier cannot be greater than 1");
+        }
         this.dealCode = dealCode;
     }
 
+    //getters
+    public float getDealModifier() { return dealModifier; }
+    public LocalDateTime getStartDate() {
+        return startDate;
+    }
+    public LocalDateTime getEndDate() {
+        return endDate;
+    }
+    public String getDealCode() { return dealCode; }
+
+
     //Helper Method
     public final LocalDateTime convertDateFormat(String date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy H:m");
-        LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
-        return dateTime;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy H:m");
+            LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
+            return dateTime;
+        }catch(DateTimeParseException e){
+            System.err.println("Error parsing date: " + date +", \n"
+                    + "Actual date attribute is set to NULL");
+            System.out.println("expected : MM-dd-yyyy H:m");
+            return null;
+        }
     }
 
-
-
-
-    //Debugging
-    public void print() {
-        System.out.printf("Deal Modifier: %.2f\n", this.dealModifier);
-        System.out.printf("Start Date: %s\n", this.startDate);
-        System.out.printf("End Date: %s\n", this.endDate);
-        System.out.printf("Deal Code: %s\n", this.dealCode);
-    }
-
-    public static void main(String[] args) {
-        Deal deal = new Deal();
-        deal.print();
-
-        System.out.println();
-        Deal deal2 = new Deal(1.5f, "10-01-2020 12:00", "10-08-2020 12:00", "deal");
-        deal2.print();
-    }
 }

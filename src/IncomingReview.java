@@ -3,33 +3,42 @@ import java.time.LocalDateTime;
 
 public class IncomingReview extends Review {
 
-    protected boolean isFlaggedForModeration;
+    private boolean flagged = false;
 
-    protected IncomingReview(String reviewId, CustomerAccount customerAccount, double rating, String reviewText, LocalDateTime reviewDate, boolean isFlaggedForModeration) {
-        super(reviewId, customerAccount, rating, reviewText, reviewDate);
-        this.isFlaggedForModeration = isFlaggedForModeration;
+    ////constructors
+    //no argument constructor
+    public IncomingReview(){
+        super();
+        flagged = false;
     }
 
-    public boolean isFlaggedForModeration() {
-        return isFlaggedForModeration;
+    //constructor
+    public IncomingReview(String reviewId, CustomerAccount writer, CustomerAccount target,
+                          double rating, String reviewText, LocalDateTime reviewDate) {
+        super(reviewId, writer, target, rating, reviewText, reviewDate );
+        flagged = false;
     }
 
-    public void setFlaggedForModeration(boolean flaggedForModeration) {
-        isFlaggedForModeration = flaggedForModeration;
+    public boolean isFlagged() {
+        return flagged;
     }
 
-    public void flagReviewForModeration() {
-        this.isFlaggedForModeration = true;
-        System.out.println("Incoming review " + reviewId + " has been flagged for moderation by " + customerAccount.getCustomerName());
+    public void setFlagged(boolean flagged) {
+        this.flagged = flagged;
+    }
+
+    public void flagReview(CustomerAccount caller) {
+        this.flagged = true;
+        System.out.println("Incoming review " + reviewId + " has been flagged for moderation by "
+            + caller.getCustomerName());
     }
 
     @Override
-    public void writeReview() {
+    public void printReview() {
         System.out.println("----- Incoming Review -----");
-        System.out.println("By: " + customerAccount.getCustomerName() + " on " + reviewDate);
-        System.out.println("Rating: " + rating + " (Flagged: " + isFlaggedForModeration + ")");
-        System.out.println("Comment: " + reviewText);
+        System.out.println(
+            (isFlagged()) ? " -** This Review was flagged for investigation  **- " : "");
+        super.printReview();
         System.out.println("----------------------------");
     }
-
 }

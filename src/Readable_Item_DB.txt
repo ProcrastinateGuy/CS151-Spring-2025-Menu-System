@@ -1,0 +1,11 @@
+Item ID: 1, Name: Deli_Burger,   Price: 5.99$,  Quantity: 2,   Category: Fast Food,    Discount: 10%, Taxable: Y
+Item ID: 2, Name: Pizza,         Price: 8.99$,  Quantity: 1,   Category: Fast Food,    Discount: 15%, Taxable: N
+Item ID: 3, Name: Pasta,         Price: 7.49$,  Quantity: 5,   Category: Italian,      Discount: 5%,  Taxable: N
+Item ID: 4, Name: Salad,         Price: 4.99$,  Quantity: 3,   Category: Healthy,      Discount: 0%,  Taxable: N
+Item ID: 5, Name: Coffee,        Price: 2.99$,  Quantity: 10,  Category: Beverage,     Discount: 10%, Taxable: N
+Item ID: 6, Name: Ice Cream,     Price: 3.99$,  Quantity: 4,   Category: Dessert,      Discount: 20%, Taxable: N
+Item ID: 7, Name: Deli_Sandwich, Price: 6.49$,  Quantity: 2,   Category: Fast Food,    Discount: 8%,  Taxable: Y
+Item ID: 8, Name: Juice,         Price: 3.49$,  Quantity: 6,   Category: Beverage,     Discount: 12%, Taxable: N
+Item ID: 9, Name: Deli_Sushi,    Price: 12.99$, Quantity: 1,   Category: Japanese,     Discount: 0%,  Taxable: Y
+Item ID: 10,Name: Steak,         Price: 15.99$, Quantity: 2,   Category: Fine Dining,  Discount: 5%,  Taxable: N
+Item ID: 11,Name: Coke,          Price: 3.49$,  Quantity: 100, Category: Co2_Beverage, Discount: 30%, Taxable: Y
