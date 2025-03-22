@@ -4,42 +4,49 @@ import java.util.Scanner;
 public class Main {
 
     public static void clearScreen() {
-        // Using ANSI escape codes to clear the screen.
+        // Clear screen function
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ReviewManager reviewManager = new ReviewManager();  // Instantiate the ReviewManager
+        ReviewManager reviewManager = new ReviewManager();
 
         boolean exit = false;
         while (!exit) {
             clearScreen(); // Clear screen at the beginning of each iteration
-            System.out.println("=======================================");
-            System.out.println("         Food Order System            ");
-            System.out.println("=======================================");
-            System.out.println("1. View Menu Items");
+            System.out.println("*************** Welcome To Our Cafe ***************");
+            System.out.println("1. View Menu");
             System.out.println("2. Place an Order");
-            System.out.println("3. View Deals");
+            System.out.println("3. View Deals/Promos");
             System.out.println("4. Write a Review");
             System.out.println("5. View Reviews");
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
 
             String input = scanner.nextLine();
-            int choice = 0;
+            System.out.println();
+            int option = 0;
+
+            if (input.toLowerCase().equals("exit")) {
+                System.out.println("Thank you for using the Food Order System. Goodbye!");
+                exit = true;
+                break;
+            }
+
             try {
-                choice = Integer.parseInt(input);
+                option = Integer.parseInt(input);
             } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number.\n");
+                System.out.println("Invalid input. Please enter a number.");
+                System.out.println();
                 System.out.print("Press Enter to continue...");
                 scanner.nextLine();
                 continue;
             }
             System.out.println();
 
-            switch (choice) {
+            switch (option) {
                 case 1:
                     MenuItemsReader.readMenuItems();
                     System.out.print("\nPress Enter to return to the main menu...");
@@ -93,7 +100,7 @@ public class Main {
                     exit = true;
                     break;
                 default:
-                    System.out.println("Invalid option, please choose again.");
+                    System.out.println("Invalid , please choose again.");
                     System.out.print("\nPress Enter to return to the main menu...");
                     scanner.nextLine();
             }
