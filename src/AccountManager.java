@@ -13,7 +13,7 @@ public class AccountManager implements ManagerInterface<CustomerAccount>{
 
     private String versionNumber = "default versionNumber";
 
-
+    // String type  = store, customer
     //status of an account
     private boolean suspended = false;
     private boolean premiumUser = false;

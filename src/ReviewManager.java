@@ -1,5 +1,4 @@
 //Review Manager
-import com.sun.source.tree.Tree;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -50,9 +49,11 @@ public class ReviewManager implements ManagerInterface <Review> {
         }
     }
 
-    public void printReview(PriorityQueue<Review> heap) {
+
+    //helper method
+    private void outputReviewToArrayList(ArrayList<Review> target, PriorityQueue<Review> heap) {
         while(!heap.isEmpty()){
-            heap.poll().printReview();
+            target.add( heap.poll());
         }
     }
 
@@ -112,6 +113,46 @@ public class ReviewManager implements ManagerInterface <Review> {
             }
         }
         return sortedReviewHeap ;
+    }
+    public void writeReview(String writerID, String targetID, double rating, String reviewText, boolean isVerifiedPurchase) {
+        String reviewID = generateID();
+        // Create new CustomerAccount objects using the provided IDs.
+        CustomerAccount writerAcc = new CustomerAccount();
+        writerAcc.setCustomerID(writerID);
+        CustomerAccount targetAcc = new CustomerAccount();
+        targetAcc.setCustomerID(targetID);
+
+        OutgoingReview outgoingReview = new OutgoingReview(
+            reviewID, writerAcc, targetAcc, rating, reviewText, LocalDateTime.now(), isVerifiedPurchase
+        );
+        outgoingReviewsMap.put(reviewID, outgoingReview);
+        System.out.println("Review successfully written:");
+        outgoingReview.printReview();
+    }
+
+
+    public void viewAllReviews(boolean isIncoming) {
+        SortedMap<String, Review> sortedReviews = new TreeMap<>();
+
+        if (isIncoming) {
+            // Copy all incoming reviews to the sorted map
+            for (IncomingReview review : incomingReviewsMap.values()) {
+                sortedReviews.put(review.getReviewID(), review);
+            }
+        } else {
+            // Copy all outgoing reviews to the sorted map
+            for (OutgoingReview review : outgoingReviewsMap.values()) {
+                sortedReviews.put(review.getReviewID(), review);
+            }
+        }
+
+        if (sortedReviews.isEmpty()) {
+            System.out.println("No reviews available.");
+        } else {
+            for (Review review : sortedReviews.values()) {
+                review.printReview();  // Assuming your reviews have a printReview() method
+            }
+        }
     }
 
 }
