@@ -9,7 +9,7 @@ import java.util.UUID;
  keep track of all the deals associated with it
  */
 public class DealManager implements ManagerInterface <Deal> {
-
+    private final int CREATION_LIMIT = 100;
     HashMap<String, Deal> dealsMap = new HashMap<>();
     // Key: the dealID, Value: the Deal object
     // we used HashMap to store deals because we don't care about ordering the Deals
@@ -35,7 +35,10 @@ public class DealManager implements ManagerInterface <Deal> {
 
     // generating a deal with no customID provided
     public void generateDeal(float dealModifier, String startDate, String endDate) throws InvalidArgumentException, IllegalArgumentException, KeyAlreadyExistsException {
-
+        if(dealsMap.size() >= CREATION_LIMIT){
+            System.out.println("Deal creation limit exceeded");
+            return;
+        }
         String ID = generateID();
         exceptionHandling(() -> {
             Deal deal = new Deal( dealModifier, startDate, endDate, ID);

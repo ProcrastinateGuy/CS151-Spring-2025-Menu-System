@@ -11,6 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        ItemShelf shelf = new ItemShelf(".\\src\\itemDB.txt");
+        AccountManager accountManager = new AccountManager();
         ReviewManager reviewManager = new ReviewManager();
 
         boolean exit = false;
@@ -48,7 +50,8 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    MenuItemsReader.readMenuItems();
+                    //MenuItemsReader.readMenuItems();
+                    shelf.printAllItems();
                     System.out.print("\nPress Enter to return to the main menu...");
                     scanner.nextLine();
                     break;

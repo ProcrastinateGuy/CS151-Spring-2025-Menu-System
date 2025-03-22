@@ -22,7 +22,7 @@ public class Order {
     private void loadAllItem () {
         try{
             itemShelf =  new ItemShelf(".\\src\\itemDB.txt");}
-        catch(IOException e){
+        catch(InvalidArgumentException e){
             System.out.println("Error loading the items DB");
             System.err.println(e.getMessage());
         }
