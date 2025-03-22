@@ -48,7 +48,7 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    MenuItemsReader.readMenuItems();
+                    //MenuItemsReader.readMenuItems();
                     System.out.print("\nPress Enter to return to the main menu...");
                     scanner.nextLine();
                     break;

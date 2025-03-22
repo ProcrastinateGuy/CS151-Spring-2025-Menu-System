@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ItemShelf{
-
+    private final int CREATION_LIMIT = 100;
     private HashMap<String, Item> itemShelf = new HashMap<>();
 
     /**
      * Default constructor - Creates Empty Item ArrayList
      */
     public ItemShelf(String filePath) throws IOException{
-        private final int CREATION_LIMIT = 100;
+
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
