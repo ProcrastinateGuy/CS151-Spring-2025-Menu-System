@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 
 
 public class OrderManager implements ManagerInterface <Order>{
+    private final int CREATION_LIMIT = 100;
     HashMap<String, Order> ordersMap = new HashMap<>();
     // interface methods
     @Override
@@ -52,6 +53,11 @@ public class OrderManager implements ManagerInterface <Order>{
     // it doesn't make sense to create an Order with no items,
     // so creating an order without an initial Item is not considered
     public void createOrder(String customerID, String initialItemID, int quantity) throws InvalidArgumentException {
+        if(ordersMap.size() >= CREATION_LIMIT){
+            System.out.println("Order creation limit exceeded");
+            return;
+        }
+
         if(quantity < 0){ quantity = 1;} //default the quantity to 1 if invalid
 
         Order order  = new Order(customerID, generateID());

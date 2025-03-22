@@ -2,21 +2,27 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Arrays;
 
 public class ItemShelf{
-
-    private HashMap<String, Item> itemShelf;
+    private final int CREATION_LIMIT = 100;
+    private HashMap<String, Item> itemShelf = new HashMap<>();
 
     /**
      * Default constructor - Creates Empty Item ArrayList
      */
-    public ItemShelf(String filePath) throws IOException{
+    public ItemShelf(String filePath){
 
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             String[] values;
             while ((line = reader.readLine()) != null) {
+
+                if(itemShelf.size() >= CREATION_LIMIT){
+                    System.out.println("Item creation limit exceeded");
+                    break;
+                }
                 values = line.split(",");
                 Item item = new Item(values[0], values[1],
                     Double.parseDouble(values[2]), Integer.parseInt(values[3]),
@@ -28,7 +34,7 @@ public class ItemShelf{
         } catch (IOException e) {
             System.err.println("Error reading file: " + e.getMessage());
             //propagate the Exception to the caller
-            throw new RuntimeException(e);
+            throw new InvalidArgumentException(e.getMessage(), new Throwable());
 
         }
     }
@@ -110,5 +116,21 @@ public class ItemShelf{
         return null; // Return null if item not found
     }
 
+    public void printAllItems(){
+        String [] outputArray = new String[itemShelf.size()];
+
+        //grep all the item from HashMap
+        for (int i=1; i<=outputArray.length; i++) {
+            outputArray[Integer.valueOf(itemShelf.get(Integer.toString(i)).getItemID()) - 1] =
+                itemShelf.get(Integer.toString(i)).toString();
+        }
+        //sort the array
+        //Arrays.sort(outputArray);
+
+        //output the array
+        for (String output : outputArray) {
+            System.out.println(output);
+        }
+    }
 
 }
