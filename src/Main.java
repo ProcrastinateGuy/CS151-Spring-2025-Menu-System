@@ -1,5 +1,6 @@
 
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class Main {
 
@@ -26,7 +27,7 @@ public class Main {
         } else {
             shelf = new ItemShelf("./src/itemDB.txt");
         }
-        //ItemShelf shelf = new ItemShelf("./src/itemDB.txt");
+
         AccountManager accountManager = new AccountManager();
         ReviewManager reviewManager = new ReviewManager();
 
@@ -45,12 +46,12 @@ public class Main {
             System.out.println("Note: You can type 'exit' to any prompt to close the app.");
             System.out.print("Enter your choice: ");
 
-            String input = scanner.nextLine();
-            exitProgram(input);
+            String inputOption = scanner.nextLine();
+            exitProgram(inputOption);
             System.out.println();
-            int option = 0;
 
 
+            /*
             try {
                 option = Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -62,52 +63,71 @@ public class Main {
                 continue;
             }
             System.out.println();
-
-            switch (option) {
-                case 1:
-                    //MenuItemsReader.readMenuItems();
+            */
+            switch (inputOption) {
+                case "1":
                     shelf.printAllItems();
                     System.out.print("\nPress Enter to return to the main menu or type exit to close the app: ");
                     String input_1 = scanner.nextLine();
                     exitProgram(input_1);
                     break;
-                case 2:
+                case "2":
                     System.out.println("Order placement functionality is not implemented yet.");
                     System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
                     String input_2 = scanner.nextLine();
                     exitProgram(input_2);
                     break;
-                case 3:
+                case "3":
                     System.out.println("Deals are not fully implemented yet.");
                     System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
                     String input_3 = scanner.nextLine();
                     exitProgram(input_3);
                     break;
-                case 4:
-                    // Write a review feature
-                    System.out.print("Enter your writer ID: ");
-                    String writerID = scanner.nextLine();
-                    exitProgram(writerID);
-                    System.out.print("Enter target ID (restaurant ID): ");
-                    String targetID = scanner.nextLine();
-                    exitProgram(targetID);
-                    System.out.print("Enter rating (e.g., 4.5): ");
-                    double rating = Double.parseDouble(scanner.nextLine());
-                    exitProgram(String.valueOf(rating));
-                    System.out.print("Enter your review: ");
-                    String reviewText = scanner.nextLine();
-                    exitProgram(reviewText);
-                    System.out.print("Is this a verified purchase? (true/false): ");
-                    boolean isVerifiedPurchase = Boolean.parseBoolean(scanner.nextLine());
-                    exitProgram(String.valueOf(isVerifiedPurchase));
-                    System.out.println();
+                case "4":
 
-                    reviewManager.writeReview(writerID, targetID, rating, reviewText, isVerifiedPurchase);
-                    System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
-                    String input_4 = scanner.nextLine();
-                    exitProgram(input_4);
+                    String userInput;
+                    String [] reviewInfo = new String[5];
+                    double rating;
+                    Runnable[] tasksBeforeinput = {
+                        () -> System.out.print("Enter your writer ID: "),
+                        () -> System.out.print("Enter target ID (restaurant ID): "),
+                        () -> System.out.print("Enter rating (e.g., 4.5): "),
+                        () -> System.out.print("Enter your review: "),
+                        () -> System.out.print("Is this a verified purchase? (true/false): ")
+                    };
+
+                    Consumer<String>[] tasksAfterinput = new Consumer[]{
+                            input -> reviewInfo[0] = (String)input,
+                            input -> reviewInfo[1] = (String)input,
+                            input -> reviewInfo[2] = (String)input,
+                            input -> reviewInfo[3] = (String)input,
+                            input -> reviewInfo[4] = (String)input
+                    };
+
+                    for(int  i=0; i<5; i++){
+                        tasksBeforeinput[i].run();
+                        userInput = scanner.nextLine();
+                        exitProgram(userInput);
+                        tasksAfterinput[i].accept(userInput);
+                    }
+
+                    //check the input
+                    try {
+                        rating = Double.parseDouble(reviewInfo[2]);
+                    }catch (NumberFormatException e){
+                        System.out.println("You have entered an invalid rating, setting to 0.0");
+                        rating = 0.0;
+                    }
+
+                        reviewManager.writeReview(reviewInfo[0], reviewInfo[1], rating, reviewInfo[3], Boolean.parseBoolean(reviewInfo[4]));
+                        System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
+                        String input_4 = scanner.nextLine();
+                        exitProgram(input_4);
+
+
                     break;
-                case 5:
+
+                case "5":
                     // View reviews feature
                     System.out.print("View (1) Incoming reviews or (2) Outgoing reviews? ");
                     String reviewType = scanner.nextLine();
@@ -124,7 +144,7 @@ public class Main {
                     String input_5 = scanner.nextLine();
                     exitProgram(input_5);
                     break;
-                case 6:
+                case "6":
                     System.out.println("Thank you for using the Food Order System. Goodbye!");
                     exit = true;
                     break;
