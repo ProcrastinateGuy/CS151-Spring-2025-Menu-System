@@ -3,28 +3,14 @@
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class ReviewManager implements ManagerInterface<Review> {
+public class ReviewManager implements ManagerInterface <Review> {
 
     // a map that maintains the order of keys
     // implemented with a RB Tree
     SortedMap<String, IncomingReview> incomingReviewsMap = new TreeMap<>();
     SortedMap<String, OutgoingReview> outgoingReviewsMap = new TreeMap<>();
 
-    public void writeReview(String writerID, String targetID, double rating, String reviewText, boolean isVerifiedPurchase) {
-        String reviewID = generateID();
-        // Create new CustomerAccount objects using the provided IDs.
-        CustomerAccount writerAcc = new CustomerAccount();
-        writerAcc.setCustomerID(writerID);
-        CustomerAccount targetAcc = new CustomerAccount();
-        targetAcc.setCustomerID(targetID);
 
-        OutgoingReview outgoingReview = new OutgoingReview(
-                reviewID, writerAcc, targetAcc, rating, reviewText, LocalDateTime.now(), isVerifiedPurchase
-        );
-        outgoingReviewsMap.put(reviewID, outgoingReview);
-        System.out.println("Review successfully written:");
-        outgoingReview.printReview();
-    }
 
     // interface methods
     @Override
@@ -36,11 +22,13 @@ public class ReviewManager implements ManagerInterface<Review> {
     @Override
     public Review getMember(String reviewID) {
         // check which map has the key
-        if (incomingReviewsMap.containsKey(reviewID)) {
+        if(incomingReviewsMap.containsKey(reviewID)){
             return incomingReviewsMap.get(reviewID);
-        } else if (outgoingReviewsMap.containsKey(reviewID)) {
+        }
+        else if(outgoingReviewsMap.containsKey(reviewID)){
             return outgoingReviewsMap.get(reviewID);
-        } else {
+        }
+        else{
             // if neither map has the key, output error message
             System.out.println("Member not found");
             return null;
@@ -49,19 +37,23 @@ public class ReviewManager implements ManagerInterface<Review> {
     }
 
     public void printReview(String reviewID) {
-        if (incomingReviewsMap.containsKey(reviewID)) {
+        if(incomingReviewsMap.containsKey(reviewID)){
             incomingReviewsMap.get(reviewID).printReview();
-        } else if (outgoingReviewsMap.containsKey(reviewID)) {
+        }
+        else if(outgoingReviewsMap.containsKey(reviewID)){
             outgoingReviewsMap.get(reviewID).printReview();
-        } else {
+        }
+        else{
             System.err.println(
-                    "Review with ID: " + reviewID + "does not exist.");
+            "Review with ID: " + reviewID + "does not exist.");
         }
     }
 
-    public void printReview(PriorityQueue<Review> heap) {
-        while (!heap.isEmpty()) {
-            heap.poll().printReview();
+
+    //helper method
+    private void outputReviewToArrayList(ArrayList<Review> target, PriorityQueue<Review> heap) {
+        while(!heap.isEmpty()){
+            target.add( heap.poll());
         }
     }
 
@@ -75,28 +67,29 @@ public class ReviewManager implements ManagerInterface<Review> {
     }
 
     public void generateReview(CustomerAccount writer, CustomerAccount target,
-            double rating, String reviewText) {
+                               double rating, String reviewText){
         String reviewID = generateID();
-        outgoingReviewsMap.put(reviewID,
-                new OutgoingReview(reviewID, writer, target,
-                        rating, reviewText, LocalDateTime.now(), false));
+        outgoingReviewsMap.put( reviewID,
+            new OutgoingReview(reviewID, writer, target,
+                    rating, reviewText, LocalDateTime.now(), false));
     }
 
     //methods for incoming Reviews
-    public void receiveReview(IncomingReview review) {
+    public void receiveReview(IncomingReview review){
         incomingReviewsMap.put(review.getReviewID(), review);
     }
 
-    public void flagReview(String reviewID, CustomerAccount caller) {
+    public void flagReview(String reviewID, CustomerAccount caller){
         incomingReviewsMap.get(reviewID).flagReview(caller);
     }
 
+
     //methods for both types of reviews
-    public PriorityQueue<Review> sortReview(TreeMap<String, Review> map, String sortMethod) {
+    public PriorityQueue<Review> sortReview(TreeMap<String,Review> map, String sortMethod){
 
-        PriorityQueue<Review> sortedReviewHeap;
+        PriorityQueue <Review> sortedReviewHeap;
 
-        switch (sortMethod) {
+        switch(sortMethod){
 
             case "date" -> {
                 Comparator<Review> comparator = Comparator.comparing(Review::getReviewDate);
@@ -119,8 +112,24 @@ public class ReviewManager implements ManagerInterface<Review> {
 
             }
         }
-        return sortedReviewHeap;
+        return sortedReviewHeap ;
     }
+    public void writeReview(String writerID, String targetID, double rating, String reviewText, boolean isVerifiedPurchase) {
+        String reviewID = generateID();
+        // Create new CustomerAccount objects using the provided IDs.
+        CustomerAccount writerAcc = new CustomerAccount();
+        writerAcc.setCustomerID(writerID);
+        CustomerAccount targetAcc = new CustomerAccount();
+        targetAcc.setCustomerID(targetID);
+
+        OutgoingReview outgoingReview = new OutgoingReview(
+            reviewID, writerAcc, targetAcc, rating, reviewText, LocalDateTime.now(), isVerifiedPurchase
+        );
+        outgoingReviewsMap.put(reviewID, outgoingReview);
+        System.out.println("Review successfully written:");
+        outgoingReview.printReview();
+    }
+
 
     public void viewAllReviews(boolean isIncoming) {
         SortedMap<String, Review> sortedReviews = new TreeMap<>();
@@ -145,4 +154,5 @@ public class ReviewManager implements ManagerInterface<Review> {
             }
         }
     }
+
 }

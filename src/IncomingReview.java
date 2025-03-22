@@ -7,15 +7,15 @@ public class IncomingReview extends Review {
 
     ////constructors
     //no argument constructor
-    public IncomingReview() {
+    public IncomingReview(){
         super();
         flagged = false;
     }
 
     //constructor
     public IncomingReview(String reviewId, CustomerAccount writer, CustomerAccount target,
-            double rating, String reviewText, LocalDateTime reviewDate) {
-        super(reviewId, writer, target, rating, reviewText, reviewDate);
+                          double rating, String reviewText, LocalDateTime reviewDate) {
+        super(reviewId, writer, target, rating, reviewText, reviewDate );
         flagged = false;
     }
 
@@ -30,15 +30,15 @@ public class IncomingReview extends Review {
     public void flagReview(CustomerAccount caller) {
         this.flagged = true;
         System.out.println("Incoming review " + reviewId + " has been flagged for moderation by "
-                + caller.getCustomerName());
+            + caller.getCustomerName());
     }
 
     @Override
     public void printReview() {
         System.out.println("----- Incoming Review -----");
-        System.out.println("By: " + getWriterID() + " on " + getReviewDate());
-        System.out.println("Rating: " + getRating() + " (Flagged: " + flagged + ")");
-        System.out.println("Comment: " + getReviewText());
+        System.out.println(
+            (isFlagged()) ? " -** This Review was flagged for investigation  **- " : "");
+        super.printReview();
         System.out.println("----------------------------");
     }
 }
