@@ -50,7 +50,6 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    //MenuItemsReader.readMenuItems();
                     shelf.printAllItems();
                     System.out.print("\nPress Enter to return to the main menu...");
                     scanner.nextLine();
