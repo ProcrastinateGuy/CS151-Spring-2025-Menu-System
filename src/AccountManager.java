@@ -11,8 +11,14 @@ import java.util.concurrent.Callable;
 
 
 public class AccountManager implements ManagerInterface<CustomerAccount>{
-    HashMap<String, CustomerAccount> accountsMap = new HashMap<>();
+    HashMap<String, CustomerAccount> accountsMap;
     private final int CREATION_LIMIT = 100;
+
+    ////constructors
+    // no argument
+    public AccountManager() {
+        accountsMap = new HashMap<>();
+    }
     //interface methods
     @Override
     public String generateID() {
