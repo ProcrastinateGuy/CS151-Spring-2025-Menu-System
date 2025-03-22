@@ -1,6 +1,7 @@
+//item
 import java.math.*;
 
-public class Item {
+public class Item implements Taxable {
     private String itemID;
     private String name;
     private double price;
@@ -145,14 +146,13 @@ public class Item {
 
     @Override
     public String toString(){
-        return  "Item Info: \n" +
-                "Item ID: " + itemID +
-                ", Name: " + name +
-                ", Price: $" + price +
-                ", Quantity: " + quantity +
-                ", Category: " + category +
-                ", Discount: " + discount + "%" +
-                ", Discounted Price: $ " + new BigDecimal(getDiscountedPrice()).setScale(2, RoundingMode.FLOOR)+
-                ", Discounted Price After Tax: $ " + new BigDecimal(getDiscountedPriceAfterTax()).setScale(2, RoundingMode.FLOOR);
+        return  "Item ID: " + itemID +
+            ", Name: " + name +
+            ", Price: $" + price +
+            ", Quantity: " + quantity +
+            ", Category: " + category +
+            ", Discount: " + discount + "%" +
+            ", Discounted Price: $ " + new BigDecimal(getDiscountedPrice()).setScale(2, RoundingMode.FLOOR)+
+            ", Discounted Price After Tax: $ " + new BigDecimal(getDiscountedPriceAfterTax()).setScale(2, RoundingMode.FLOOR);
     }
 }

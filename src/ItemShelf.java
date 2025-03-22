@@ -11,12 +11,17 @@ public class ItemShelf{
      * Default constructor - Creates Empty Item ArrayList
      */
     public ItemShelf(String filePath) throws IOException{
-
+        private final int CREATION_LIMIT = 100;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             String[] values;
             while ((line = reader.readLine()) != null) {
+
+                if(itemShelf.size() >= CREATION_LIMIT){
+                    System.out.println("Item creation limit exceeded");
+                    break;
+                }
                 values = line.split(",");
                 Item item = new Item(values[0], values[1],
                     Double.parseDouble(values[2]), Integer.parseInt(values[3]),
