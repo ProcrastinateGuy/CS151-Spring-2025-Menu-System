@@ -6,7 +6,7 @@ public class MenuItemsReader {
 
     public static void readMenuItems() {
         // Loads items.txt from the classpath instead of using an absolute path
-        InputStream in = MenuItemsReader.class.getClassLoader().getResourceAsStream("items.txt");
+        InputStream in = MenuItemsReader.class.getClassLoader().getResourceAsStream("ItemDB.txt");
         if (in == null) {
             System.err.println("items.txt not found on the classpath!");
             return;

@@ -15,8 +15,7 @@ public class CustomerAccount {
     private String paymentMethod = "default payment";
     private String InterestedCategory = "default interest";
     private LocalDate dateOfBirth = LocalDate.of(1500, 1, 1);
-
-    private String versionNumber = "default versionNumber";
+    private String password = "default password";
 
     //status of an account
     private boolean suspended = false;
@@ -47,43 +46,68 @@ public class CustomerAccount {
 
     //name and phone
     //initialize with only name and phone number
-    public CustomerAccount(String customerName, String phone) {
+    public CustomerAccount(String customerID, String customerName, String phone) {
+        setCustomerID(customerID);
         setCustomerName(customerName);
         setPhone(phone);
 
         // all other values remain as default
     }
 
+    public void printAccountInfo() {
+        System.out.println("CustomerID: " + customerID);
+        System.out.println("CustomerName: " + customerName);
+        System.out.println("Email: " + email);
+        System.out.println("Phone: " + phone);
+        System.out.println("Address: " + address);
+        System.out.println("PaymentMethod: " + paymentMethod);
+        System.out.println("InterestedCategory: " + InterestedCategory);
+        System.out.println("DateOfBirth: " + dateOfBirth);
+        System.out.println("Password: " + password);
+        System.out.println("Suspended: " + suspended);
+        System.out.println("PremiumUser: " + premiumUser);
+        System.out.println("AcceptTextMessage: " + acceptTextMessage);
+        System.out.println("HasProblemWithLastOrder: " + hasProblemWithLastOrder);
+        System.out.println("favorites: " + favorites);
+        System.out.println("rewardPoints: " + rewardPoints);
+        System.out.println("totalSavings: " + totalSavings);
+
+    }
+
     //setter
     // return value: true: set successful
     // false: set operation failed
-    public boolean setCustomerName(String customerName) {
+    public void setCustomerName(String customerName) {
         if (customerName.matches(".*[^A-z0-9 ].*")) { // this regex allows white spaces
             System.out.println("names should only contain alphabet, spaces, or numbers");
-            return false;
+            return;
         }
 
         this.customerName = customerName;
-        return true;
     }
 
-    public boolean setEmail(String email) {
+    public void setEmail(String email) {
+        //we only check for the characters that is not allowed in an email address
+        if (email.matches(".*[^A-z0-9.@].*") || email.matches("^((?!@).)*$")) {
+            System.out.println("email addresses should only contain alphabet, ., ,numbers"
+                    + "and at least one @");
+            return;
+        }
         this.email = email;
-        return true;
+
     }
 
-    public boolean setPhone(String phone) {
+    public void setPhone(String phone) {
         if (phone.matches("[^0-9]")) {
             System.out.println("phones should only contain numbers");
-            return false;
+            return;
         }
         if (phone.length() != 10) {
             System.out.println("phones should be exactly 10 digits,"
                     + "don't use (), -, or white spaces");
-            return false;
+            return;
         }
         this.phone = phone;
-        return true;
     }
 
     public void setAddress(String address) {
@@ -100,10 +124,6 @@ public class CustomerAccount {
 
     public void setInterestedCategory(String interestedCategory) {
         InterestedCategory = interestedCategory;
-    }
-
-    public void setVersionNumber(String versionNumber) {
-        this.versionNumber = versionNumber;
     }
 
     public void setSuspended(boolean suspended) {
@@ -150,6 +170,11 @@ public class CustomerAccount {
         this.reviewManager = reviewManager;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+
+    }
+
     //getter
     public String getCustomerName() {
         return customerName;
@@ -183,10 +208,6 @@ public class CustomerAccount {
         return InterestedCategory;
     }
 
-    public String getVersionNumber() {
-        return versionNumber;
-    }
-
     public boolean isSuspended() {
         return suspended;
     }
@@ -213,6 +234,10 @@ public class CustomerAccount {
 
     public double getTotalSavings() {
         return totalSavings;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public DealManager getDealManager() {
