@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.function.Consumer;
 
 public class Main {
-
+    private static ItemShelf shelf;
     private static Scanner scanner = new Scanner(System.in);
     public static void clearScreen() {
         // Clear screen function
@@ -14,14 +14,17 @@ public class Main {
     public static void exitProgram(String input) {
         // Exit program function
         if (input.toLowerCase().equals("exit")) {
-            System.out.println("Thank you for using the Food Order System. Goodbye!");
+            System.out.println("\nThank you for using the Food Order System. Goodbye!");
             System.exit(0);
         }
     }
+    public void addItemLoop(CustomerAccount account) {
 
+
+    }
     public static void main(String[] args) {
        
-        ItemShelf shelf = null;
+
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
             shelf = new ItemShelf(".\\src\\itemDB.txt");
         } else {
@@ -30,7 +33,10 @@ public class Main {
 
         AccountManager accountManager = new AccountManager();
 
-        ReviewManager reviewManager = new ReviewManager();
+        //this line will be replaced by getting the return from the log in session
+        CustomerAccount currentAccount = new CustomerAccount();
+
+        //ReviewManager reviewManager = new ReviewManager();
         boolean exit = false;
         do {
             clearScreen(); // Clear screen at the beginning of each iteration
@@ -59,20 +65,52 @@ public class Main {
                 }
 
                 case "2" -> {
-                    String phoneInput;
-                    Runnable[] tasksBeforeinput = {
-                        () -> System.out.println("Please enter your phone number"),
-                        () -> System.out.println("Please enter your phone number"),
-                        () -> System.out.println("Please enter your phone number"),
-                        () -> System.out.println("Please enter your phone number"),
-                        () -> System.out.println("Please enter your phone number"),
-                        () -> System.out.println("Please enter your phone number")
-                    };
-/*
-                    Consumer<String> [] taskAfterInput = new Consumer [] {
-                        input ->
-                    };
-*/
+
+                    boolean stillAdding = true;
+                    int loopCounter = 0;
+                    String orderID = null;
+                    while(stillAdding) {
+
+
+                        System.out.print("Enter Item ID: ");
+                        String itemID = scanner.nextLine();
+                        exitProgram(itemID);
+
+                        System.out.print("Enter Quantity: ");
+                        String quantity = scanner.nextLine();
+                        exitProgram(quantity);
+
+                        if (shelf.getItem(itemID) == null) {
+                            System.out.println("Item " + itemID + " does not exist");
+                            continue;
+                        }
+
+                        int quantityInt = 0;
+                        try {
+                            quantityInt = Integer.parseInt(quantity);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Quantity entered is invalid");
+                            continue;
+                        }
+                        if(loopCounter == 0){
+                            orderID = currentAccount.getOrderManager()
+                                    .createOrder(currentAccount.getCustomerID(), itemID, quantityInt);
+                            loopCounter++;
+                        }else{
+                            currentAccount.getOrderManager().addItemToOrder(orderID, itemID, quantityInt);
+                        }
+
+                        System.out.print("Still Adding? (Y/N): ");
+                        String userStillAdding = scanner.nextLine();
+                        exitProgram(userStillAdding);
+                        if(userStillAdding.toLowerCase().equals("n")){
+                            stillAdding = false;
+                        }
+                    }
+
+                    System.out.println("Order placed, invoice as below: ");
+                    System.out.print(currentAccount.getOrderManager().getMember(orderID).toString());
+                    currentAccount.getOrderManager().getMember(orderID).printOrderItems();
                     System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
                     String input_2 = scanner.nextLine();
                     exitProgram(input_2);
@@ -123,7 +161,7 @@ public class Main {
                         rating = 0.0;
                     }
 
-                    reviewManager.writeReview(reviewInfo[0], reviewInfo[1], rating, reviewInfo[3], Boolean.parseBoolean(reviewInfo[4]));
+                    currentAccount.getReviewManager().writeReview(reviewInfo[0], reviewInfo[1], rating, reviewInfo[3], Boolean.parseBoolean(reviewInfo[4]));
                     System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
                     String input_4 = scanner.nextLine();
                     exitProgram(input_4);
@@ -179,10 +217,10 @@ public class Main {
                                 scanner.nextLine();
                                 continue;
                         }
-                        reviewManager.viewFilteredReviews(isIncoming, filterOption);
+                        currentAccount.getReviewManager().viewFilteredReviews(isIncoming, filterOption);
                     } else {
                         // View all reviews without filtering
-                        reviewManager.viewAllReviews(isIncoming);
+                        currentAccount.getReviewManager().viewAllReviews(isIncoming);
                     }
 
                     System.out.print("\nPress Enter to return to the main menu...");
@@ -192,7 +230,6 @@ public class Main {
                 }
                 //   case "6" -> {
                 case "6" -> {
-                    System.out.println("Thank you for using the Food Order System. Goodbye!");
                     exitProgram("exit");
                 }
 

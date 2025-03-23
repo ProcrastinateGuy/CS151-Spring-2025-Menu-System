@@ -54,6 +54,7 @@ public class CustomerAccount {
     //name and phone
     //initialize with only name and phone number
     public CustomerAccount(String customerID, String customerName, String phone){
+        setCustomerID(customerID);
         setCustomerName(customerName);
         setPhone(phone);
 
