@@ -1,40 +1,24 @@
 //Account Manager
-
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.util.List;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
-public class AccountManager implements ManagerInterface<CustomerAccount> {
 
-    //member list
-    private String customerID = "default ID";
-    private String customerName = "default name";
-    private String email = "default email";
-    private String phone = "default phone";
-    private String address = "default address";
-    private String paymentMethod = "default payment";
-    private String InterestedCategory = "default interest";
-    private LocalDate dateOfBirth = LocalDate.of(1500, 1, 1);
+public class AccountManager implements ManagerInterface<CustomerAccount>{
+    HashMap<String, CustomerAccount> accountsMap;
+    private final int CREATION_LIMIT = 100;
 
-    private String versionNumber = "default versionNumber";
-
-    //status of an account
-    private boolean suspended = false;
-    private boolean premiumUser = false;
-    private boolean acceptTextMessage = false;
-    private boolean hasProblemWithLastOrder = false;
-
-    //a list of item ID for storing the customers favorites
-    private List<Integer> favorites;
-
-    private int rewardPoints = 0;
-    private double totalSavings = 0.0;
-
-    // member class
-    private DealManager dealManager;
-    private OrderManager orderManager;
-    private ReviewManager reviewManager;
-
+    ////constructors
+    // no argument
+    public AccountManager() {
+        accountsMap = new HashMap<>();
+    }
     //interface methods
     @Override
     public String generateID() {
@@ -43,40 +27,111 @@ public class AccountManager implements ManagerInterface<CustomerAccount> {
     }
 
     @Override
-    public CustomerAccount getMember(String memberID) {
+    public CustomerAccount getMember(String customerID) {
+        return runWithChecking( (() -> {
+            return accountsMap.get(customerID);
+        }), customerID);
+    }
+
+    public void generateAccount(String name, String phone) {
+        if(accountsMap.size() >= CREATION_LIMIT){
+            System.out.println("Account creation limit exceeded");
+            return;
+        }
+        String customerID = generateID();
+        //while loop to keep generate a new ID until there's no duplicate
+        while(accountsMap.containsKey(customerID)){
+            customerID = generateID();
+        }
+
+        CustomerAccount account = new CustomerAccount(customerID, name, phone);
+        System.out.println("Greetings, " + name + "! Your ID is " + customerID);
+        accountsMap.put(account.getCustomerID(), account);
+    }
+
+    //this method let the customer fill out the full information of their profile
+    // phone and name are already exist
+
+    public void completeProfile(String customerID, String email, String address, String interest,
+                                String birthday, String paymentMethod, boolean textMsgAd ){
+        if(!accountsMap.containsKey(customerID)){ System.out.println("CustomerID not found in Manager"); return; }
+        CustomerAccount account = accountsMap.get(customerID);
+        account.setEmail(email);
+        account.setAddress(address);
+
+        try {
+            account.setDateOfBirth(LocalDate.parse(birthday));
+        }catch (DateTimeParseException e){
+            System.out.println("Error parsing date: " + e.getMessage());
+        }
+
+        account.setInterestedCategory(interest);
+        account.setPaymentMethod(paymentMethod);
+        account.setAcceptTextMessage(textMsgAd);
+
+    }
+
+    public void setPassWord(String customerID, String password){
+        CustomerAccount account = accountsMap.get(customerID);
+        account.setPassword(hashPwd(password));
+    }
+
+    public boolean logIn (String phone, String password){
+        CustomerAccount account = getAccountByPhone(phone);
+        if (account != null){
+            return (account.getPassword()).contentEquals(hashPwd(password));
+        }
+
+        System.out.println("CustomerID not found in Manager");
+        return false;
+    }
+
+    //helper method to handle possible exception
+    private CustomerAccount runWithChecking(Callable<CustomerAccount> callable, String customerID) throws InvalidArgumentException{
+        try{
+            if(!accountsMap.containsKey(customerID) ){
+                throw new InvalidArgumentException(
+                    "CustomerID not found in Manager", new Throwable());
+            }
+            return callable.call();
+        }catch(Exception e){
+            System.out.println("Error performing the task: " + e.getMessage());
+            return null;
+        }
+
+    }
+
+    private CustomerAccount getAccountByPhone(String phone){
+        for(CustomerAccount account: accountsMap.values()){
+            if(account.getPhone().equals(phone)){
+                return account;
+            }
+        }
         return null;
     }
 
-    //setter
-    // return value: true: set successful
-    // false: set operation failed
-    public boolean setCustomerName(String customerName) {
-        if (customerName.matches(".*[^A-z0-9 ].*")) { // this regex allows white spaces
-            System.out.println("names should only contain alphabet, spaces, or numbers");
-            return false;
+    private String hashPwd (String password){
+        MessageDigest md = null;
+        BigInteger number = BigInteger.ZERO;
+
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+            number = new BigInteger(1, md.digest(password.getBytes(StandardCharsets.UTF_8)));
+        }catch(NoSuchAlgorithmException e){
+            System.out.println("Error hashing pwd");
+            System.out.println(e.getMessage());
+        }catch(NullPointerException e ){
+            System.out.println("Error dereferencing pwd object");
         }
 
-        this.customerName = customerName;
-        return true;
-    }
+        // Convert message digest into hex
+        StringBuilder hexString = new StringBuilder(number.toString(16));
 
-    public boolean setEmail(String email) {
-        this.email = email;
-        return true;
-    }
-
-    public boolean setPhone(String phone) {
-        if (phone.matches("[^0-9]")) {
-            System.out.println("phones should only contain numbers");
-            return false;
+        // Pad with leading zeros
+        while (hexString.length() < 64){
+            hexString.insert(0, '0');
         }
-        if (phone.length() != 10) {
-            System.out.println("phones should be exactly 10 digits,"
-                    + "don't use (), -, or white spaces");
-            return false;
-        }
-        this.phone = phone;
-        return true;
+        return hexString.toString();
     }
 
 }

@@ -1,8 +1,13 @@
 //Customer account
-
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+
 
 public class CustomerAccount {
 
@@ -15,8 +20,7 @@ public class CustomerAccount {
     private String paymentMethod = "default payment";
     private String InterestedCategory = "default interest";
     private LocalDate dateOfBirth = LocalDate.of(1500, 1, 1);
-
-    private String versionNumber = "default versionNumber";
+    private String password = "default password";
 
     //status of an account
     private boolean suspended = false;
@@ -30,10 +34,12 @@ public class CustomerAccount {
     private int rewardPoints = 0;
     private double totalSavings = 0.0;
 
+
     // member class
     private DealManager dealManager = new DealManager();
     private OrderManager orderManager = new OrderManager();
     private ReviewManager reviewManager = new ReviewManager();
+
 
     //no argument Constructor
     //important values are set to -1 to distinguish invalid user
@@ -47,43 +53,68 @@ public class CustomerAccount {
 
     //name and phone
     //initialize with only name and phone number
-    public CustomerAccount(String customerName, String phone) {
+    public CustomerAccount(String customerID, String customerName, String phone){
         setCustomerName(customerName);
         setPhone(phone);
 
         // all other values remain as default
     }
 
+    public void printAccountInfo(){
+        System.out.println("CustomerID: " + customerID);
+        System.out.println("CustomerName: " + customerName);
+        System.out.println("Email: " + email);
+        System.out.println("Phone: " + phone);
+        System.out.println("Address: " + address);
+        System.out.println("PaymentMethod: " + paymentMethod);
+        System.out.println("InterestedCategory: " + InterestedCategory);
+        System.out.println("DateOfBirth: " + dateOfBirth);
+        System.out.println("Password: " + password);
+        System.out.println("Suspended: " + suspended);
+        System.out.println("PremiumUser: " + premiumUser);
+        System.out.println("AcceptTextMessage: " + acceptTextMessage);
+        System.out.println("HasProblemWithLastOrder: " + hasProblemWithLastOrder);
+        System.out.println("favorites: " + favorites);
+        System.out.println("rewardPoints: " + rewardPoints);
+        System.out.println("totalSavings: " + totalSavings);
+
+    }
+
     //setter
+
     // return value: true: set successful
     // false: set operation failed
-    public boolean setCustomerName(String customerName) {
-        if (customerName.matches(".*[^A-z0-9 ].*")) { // this regex allows white spaces
+    public void setCustomerName(String customerName) {
+        if(customerName.matches(".*[^A-z0-9 ].*")) { // this regex allows white spaces
             System.out.println("names should only contain alphabet, spaces, or numbers");
-            return false;
+            return;
         }
 
         this.customerName = customerName;
-        return true;
     }
 
-    public boolean setEmail(String email) {
-        this.email = email;
-        return true;
-    }
-
-    public boolean setPhone(String phone) {
-        if (phone.matches("[^0-9]")) {
-            System.out.println("phones should only contain numbers");
-            return false;
+    public void setEmail(String email) {
+        //we only check for the characters that is not allowed in an email address
+        if(email.matches(".*[^A-z0-9.@].*") || email.matches("^((?!@).)*$")){
+            System.out.println("email addresses should only contain alphabet, ., ,numbers" +
+                "and at least one @");
+            return;
         }
-        if (phone.length() != 10) {
-            System.out.println("phones should be exactly 10 digits,"
-                    + "don't use (), -, or white spaces");
-            return false;
+        this.email = email;
+
+    }
+
+    public void setPhone(String phone) {
+        if(phone.matches("[^0-9]")) {
+            System.out.println("phones should only contain numbers");
+            return;
+        }
+        if(phone.length() != 10) {
+            System.out.println("phones should be exactly 10 digits," +
+                "don't use (), -, or white spaces");
+            return;
         }
         this.phone = phone;
-        return true;
     }
 
     public void setAddress(String address) {
@@ -100,10 +131,6 @@ public class CustomerAccount {
 
     public void setInterestedCategory(String interestedCategory) {
         InterestedCategory = interestedCategory;
-    }
-
-    public void setVersionNumber(String versionNumber) {
-        this.versionNumber = versionNumber;
     }
 
     public void setSuspended(boolean suspended) {
@@ -138,6 +165,7 @@ public class CustomerAccount {
         this.totalSavings = totalSavings;
     }
 
+
     public void setDealManager(DealManager dealManager) {
         this.dealManager = dealManager;
     }
@@ -150,15 +178,18 @@ public class CustomerAccount {
         this.reviewManager = reviewManager;
     }
 
+    public void setPassword(String password) {
+
+
+    }
+
     //getter
+
     public String getCustomerName() {
         return customerName;
     }
 
-    public String getCustomerID() {
-        return customerID;
-    }
-
+    public String getCustomerID(){ return customerID; }
     public String getEmail() {
         return email;
     }
@@ -181,10 +212,6 @@ public class CustomerAccount {
 
     public String getInterestedCategory() {
         return InterestedCategory;
-    }
-
-    public String getVersionNumber() {
-        return versionNumber;
     }
 
     public boolean isSuspended() {
@@ -215,6 +242,8 @@ public class CustomerAccount {
         return totalSavings;
     }
 
+    public String getPassword() { return password; }
+
     public DealManager getDealManager() {
         return dealManager;
     }
@@ -226,5 +255,6 @@ public class CustomerAccount {
     public ReviewManager getReviewManager() {
         return reviewManager;
     }
+
 
 }

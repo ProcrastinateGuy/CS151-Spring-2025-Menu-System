@@ -13,10 +13,9 @@ public abstract class Review {
     protected LocalDateTime reviewDate;
 
     protected boolean edited;
-
     ////constructors
     // no argument constructor
-    public Review() {
+    public Review(){
         CustomerAccount defaultCustomer = new CustomerAccount();
         setReviewId("-1");
         setWriter(defaultCustomer);
@@ -28,7 +27,7 @@ public abstract class Review {
 
     // constructor
     public Review(String reviewId, CustomerAccount writer, CustomerAccount target,
-            double rating, String reviewText, LocalDateTime reviewDate) {
+                  double rating, String reviewText, LocalDateTime reviewDate) {
         setReviewId(reviewId);
         setWriter(writer);
         setTarget(target);
@@ -37,13 +36,13 @@ public abstract class Review {
         setReviewDate(LocalDateTime.now());
     }
 
+
     protected void printReview() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         System.out.println("Reviewed by " + getWriterName() + " on " + getReviewDate().format(formatter));
         System.out.print("Rating: " + getRating());
         System.out.println("Review:" + reviewText);
-    }
-
+        }
     //getter and setter
     //getters
     public String getReviewID() {
@@ -69,14 +68,8 @@ public abstract class Review {
     public LocalDateTime getReviewDate() {
         return reviewDate;
     }
-
-    public String getWriterName() {
-        return writer.getCustomerName();
-    }
-
-    public String getTargetName() {
-        return target.getCustomerName();
-    }
+    public String getWriterName() { return writer.getCustomerName(); }
+    public String getTargetName() { return target.getCustomerName(); }
 
     public boolean isEdited() {
         return edited;

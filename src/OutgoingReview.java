@@ -8,16 +8,16 @@ public class OutgoingReview extends Review {
 
     ////constructors
     //no argument constructor
-    public OutgoingReview() {
+    public OutgoingReview(){
         super();
         isVerifiedPurchase = false;
     }
 
     //constructor
     public OutgoingReview(String reviewId, CustomerAccount writer, CustomerAccount target,
-            double rating, String reviewText, LocalDateTime reviewDate,
-            boolean isVerifiedPurchase) {
-        super(reviewId, writer, target, rating, reviewText, reviewDate);
+                          double rating, String reviewText, LocalDateTime reviewDate,
+                          boolean isVerifiedPurchase) {
+        super(reviewId, writer, target, rating, reviewText, reviewDate );
         this.isVerifiedPurchase = isVerifiedPurchase;
     }
 
@@ -58,9 +58,9 @@ public class OutgoingReview extends Review {
     public void printReview() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         System.out.println("----- Outgoing Review -----");
-        System.out.println("Outgoing Review by " + getWriterID() + " on " + getReviewDate().format(formatter));
-        System.out.println("Rating: " + getRating() + " (Verified: " + isVerifiedPurchase + ")");
-        System.out.println("Comment: " + getReviewText());
+        System.out.println(
+            (isVerifiedPurchase) ? " -** Verified Purchase **- " : " -** Unverified **- " );
+        super.printReview();
         System.out.println("----------------------------");
     }
 }
