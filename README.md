@@ -53,6 +53,9 @@ Clone the repository from https://github.com/ProcrastinateGuy/CS151-Spring-2025-
 
 # Contributions
 <strong>Ryan:</strong> Helped integrate Login/Registration, wrote the initial code for the Deal Class, helped with Item/Order Class. Also currently writing this README
+<br>
 <strong>Kenan:</strong>
+<br>
 <strong>Sean:</strong> Wrote a lot of the code
+<br>
 <strong>Efe:</strong>
