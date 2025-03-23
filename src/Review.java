@@ -37,7 +37,7 @@ public abstract class Review {
     protected void printReview(){
         System.out.println("Reviewed by " + getWriterName() + " on "
                             + getReviewDate().toString());
-        System.out.print("Rating: " + getRating());
+        System.out.println("Rating: " + getRating());
         System.out.println("Review:" + reviewText);
         }
     //getter and setter
