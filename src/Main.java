@@ -123,7 +123,7 @@ public class Main {
             CustomerAccount currentAccount = new CustomerAccount();
 
             //ReviewManager reviewManager = new ReviewManager();
-            ReviewManager reviewManager = new ReviewManager();
+            //ReviewManager reviewManager = new ReviewManager();
             boolean exit = false;
 
             loginPrompt(accountManager);
@@ -269,9 +269,9 @@ public class Main {
                             exitProgram(reviewType);
                             System.out.println();
                             if (reviewType.equals("1")) {
-                                reviewManager.viewAllReviews(true);
+                                currentAccount.getReviewManager().viewAllReviews(true);
                             } else if (reviewType.equals("2")) {
-                                reviewManager.viewAllReviews(false);
+                                currentAccount.getReviewManager().viewAllReviews(false);
                             } else {
                                 System.out.println("Invalid choice for review type.");
                             }
