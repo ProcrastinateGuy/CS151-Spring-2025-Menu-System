@@ -40,7 +40,7 @@ public class Main {
             // Proceed to the next step
         } else {
             System.out.println("Login failed. Please check your credentials.");
-            registerPrompt(accountManager);
+            loginPrompt(accountManager);
         }
     }
 
@@ -99,8 +99,8 @@ public class Main {
         exitProgram(password);
         System.out.println();
 
-        accountManager.generateAccount(name, phone, password);
-        accountManager.completeProfile(phone, email, address, interests, birthday, paymentMethod, Boolean.parseBoolean(textMsg));
+        String customerID = accountManager.generateAccount(name, phone, password);
+        accountManager.completeProfile(customerID, email, address, interests, birthday, paymentMethod, Boolean.parseBoolean(textMsg));
 
         loginPrompt(accountManager);
     }

@@ -1,12 +1,7 @@
 //Customer account
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 
 
 public class CustomerAccount {
@@ -54,6 +49,7 @@ public class CustomerAccount {
     //name and phone
     //initialize with only name and phone number
     public CustomerAccount(String customerID, String customerName, String phone){
+        setCustomerID(customerID);
         setCustomerName(customerName);
         setPhone(phone);
 
@@ -179,7 +175,7 @@ public class CustomerAccount {
     }
 
     public void setPassword(String password) {
-
+        this.password = password;
 
     }
 

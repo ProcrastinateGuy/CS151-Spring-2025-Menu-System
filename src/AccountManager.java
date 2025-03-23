@@ -23,7 +23,7 @@ public class AccountManager implements ManagerInterface<CustomerAccount>{
     @Override
     public String generateID() {
         UUID uniqueID = UUID.randomUUID();
-        return "account".concat(uniqueID.toString());
+        return "account-".concat(uniqueID.toString());
     }
 
     @Override
@@ -33,10 +33,10 @@ public class AccountManager implements ManagerInterface<CustomerAccount>{
         }), customerID);
     }
 
-    public void generateAccount(String name, String phone, String password) {
+    public String generateAccount(String name, String phone, String password) {
         if(accountsMap.size() >= CREATION_LIMIT){
             System.out.println("Account creation limit exceeded");
-            return;
+            return null;
         }
         String customerID = generateID();
         //while loop to keep generate a new ID until there's no duplicate
@@ -48,7 +48,7 @@ public class AccountManager implements ManagerInterface<CustomerAccount>{
         System.out.println("Greetings, " + name + "! Your ID is " + customerID);
         accountsMap.put(account.getCustomerID(), account);
         setPassWord(customerID, password);
-        
+        return customerID;
         //
     }
 
