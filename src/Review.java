@@ -1,5 +1,6 @@
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Review {
 
@@ -21,7 +22,7 @@ public abstract class Review {
         setTarget(defaultCustomer);
         setRating(-1.0);
         setReviewText("default review");
-        setReviewDate(LocalDateTime.of(1500, 1, 1, 0, 0, 0));
+        setReviewDate(LocalDateTime.now());
     }
 
     // constructor
@@ -32,11 +33,13 @@ public abstract class Review {
         setTarget(target);
         setRating(rating);
         setReviewText(reviewText);
-        setReviewDate(LocalDateTime.of(1500, 1, 1, 0, 0, 0));
+        setReviewDate(LocalDateTime.now());
     }
-    protected void printReview(){
-        System.out.println("Reviewed by " + getWriterName() + " on "
-                            + getReviewDate().toString());
+
+
+    protected void printReview() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        System.out.println("Reviewed by " + getWriterName() + " on " + getReviewDate().format(formatter));
         System.out.print("Rating: " + getRating());
         System.out.println("Review:" + reviewText);
         }

@@ -133,14 +133,19 @@ public class Main {
                     // View reviews feature
                     System.out.print("View (1) Incoming reviews or (2) Outgoing reviews? ");
                     String reviewType = scanner.nextLine();
+                    boolean isIncoming;
                     exitProgram(reviewType);
                     System.out.println();
+
                     if (reviewType.equals("1")) {
-                        reviewManager.viewAllReviews(true);
+                        isIncoming = true;
                     } else if (reviewType.equals("2")) {
-                        reviewManager.viewAllReviews(false);
+                        isIncoming = false;
                     } else {
                         System.out.println("Invalid choice for review type.");
+                        System.out.print("\nPress Enter to return to the main menu...");
+                        scanner.nextLine();
+                        break;
                     }
                     System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
                     String input_5 = scanner.nextLine();
@@ -148,6 +153,51 @@ public class Main {
                 }
 
                 case "6" -> {
+
+
+                    System.out.print("Do you want to apply a filter? (y/n): ");
+                    String applyFilter = scanner.nextLine();
+                    if (applyFilter.equalsIgnoreCase("y")) {
+                        System.out.println("Select filter option:");
+                        System.out.println("1. Newest to Oldest");
+                        System.out.println("2. Oldest to Newest");
+                        System.out.println("3. Highest Rating to Lowest Rating");
+                        System.out.println("4. Lowest Rating to Highest Rating");
+                        System.out.print("Enter your choice: ");
+                        String filterChoice = scanner.nextLine();
+                        String filterOption = "";
+                        switch (filterChoice) {
+                            case "1":
+                                filterOption = "newest";
+                                break;
+                            case "2":
+                                filterOption = "oldest";
+                                break;
+                            case "3":
+                                filterOption = "highest";
+                                break;
+                            case "4":
+                                filterOption = "lowest";
+                                break;
+                            default:
+                                System.out.println("Invalid filter option.");
+                                System.out.print("\nPress Enter to return to the main menu...");
+                                scanner.nextLine();
+                                continue;
+                        }
+                        reviewManager.viewFilteredReviews(isIncoming, filterOption);
+                    } else {
+                        // View all reviews without filtering
+                        reviewManager.viewAllReviews(isIncoming);
+                    }
+
+                    System.out.print("\nPress Enter to return to the main menu...");
+
+
+                    exitProgram(scanner.nextLine());
+
+                    break;
+                case "6":
                     System.out.println("Thank you for using the Food Order System. Goodbye!");
                     exitProgram("exit");
 
