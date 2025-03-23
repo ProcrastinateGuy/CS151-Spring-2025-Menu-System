@@ -48,7 +48,9 @@ Clone the repository from https://github.com/ProcrastinateGuy/CS151-Spring-2025-
 
 # Usage
 <strong>Step 1:</strong> Change Directory into src
+<br>
 <strong>Step 2:</strong> Run `java Main`
+<br>
 <strong>Step 3:</strong> Profit????
 
 # Contributions
