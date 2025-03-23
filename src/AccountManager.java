@@ -104,7 +104,7 @@ public class AccountManager implements ManagerInterface<CustomerAccount>{
 
     }
 
-    private CustomerAccount getAccountByPhone(String phone){
+    public CustomerAccount getAccountByPhone(String phone){
         for(CustomerAccount account: accountsMap.values()){
             if(account.getPhone().equals(phone)){
                 return account;

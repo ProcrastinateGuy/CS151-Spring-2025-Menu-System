@@ -25,6 +25,7 @@ public class Order {
                 itemShelf = new ItemShelf(".\\itemDB.txt");
             } else {
                 itemShelf = new ItemShelf("./itemDB.txt");
+
             }
         }
         catch(InvalidArgumentException e){

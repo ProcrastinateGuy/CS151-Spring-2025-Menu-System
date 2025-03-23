@@ -35,9 +35,10 @@ public class OrderManager implements ManagerInterface <Order>{
         }
     }
 
-    private int runWithCheckingInteger(Callable<Integer> callable, String orderID, String itemID) throws InvalidArgumentException{
+    private int runWithCheckingInteger(Callable<Integer> callable, String orderID, String itemID, int magicSwitch) throws InvalidArgumentException{
         try{
-            if(!ordersMap.containsKey(orderID) || !ordersMap.get(orderID).containsItem(itemID)){
+            if(!ordersMap.containsKey(orderID) ||
+                (magicSwitch == 0 && !ordersMap.get(orderID).containsItem(itemID))){
                 throw new InvalidArgumentException(
                     "OrderID not found in Manager", new Throwable());
             }
@@ -50,12 +51,22 @@ public class OrderManager implements ManagerInterface <Order>{
     }
 
 
+    public void addItemToOrder(String orderID, String itemID, int quantity) throws InvalidArgumentException {
+
+        int i = runWithCheckingInteger(
+            () -> {
+                Order order = ordersMap.get(orderID);
+                order.addItem(itemID, quantity);
+                return 0;
+            }, orderID, itemID, 1);
+    }
+
     // it doesn't make sense to create an Order with no items,
     // so creating an order without an initial Item is not considered
-    public void createOrder(String customerID, String initialItemID, int quantity) throws InvalidArgumentException {
+    public String createOrder(String customerID, String initialItemID, int quantity) throws InvalidArgumentException {
         if(ordersMap.size() >= CREATION_LIMIT){
             System.out.println("Order creation limit exceeded");
-            return;
+            return "default orderID";
         }
 
         if(quantity < 0){ quantity = 1;} //default the quantity to 1 if invalid
@@ -63,25 +74,26 @@ public class OrderManager implements ManagerInterface <Order>{
         Order order  = new Order(customerID, generateID());
         order.addItem(initialItemID, quantity); //default to 1 item when input is invalid
         ordersMap.put(order.getOrderID(), order);
+        return order.getOrderID();
     }
 
     public int getIndividualItemCount(String orderID, String itemID) {
         return runWithCheckingInteger(
             () -> {
                 return ordersMap.get(orderID).getSpecificItemCount(itemID);
-            }, orderID, itemID);
+            }, orderID, itemID, 0);
     }
     public int getOrderItemCount(String orderID) throws InvalidArgumentException {
         return runWithCheckingInteger(
             () -> {return ordersMap.get(orderID).getTotalItemCount();
-                }, orderID, "");
+                }, orderID, "", 0);
             // the empty string is for the helper method's parameter list
     }
 
     public int getUniqueItemCount(String orderID) throws InvalidArgumentException {
         return runWithCheckingInteger(
             () -> {return ordersMap.get(orderID).getUniqueItemCount();
-            }, orderID, "");
+            }, orderID, "", 0);
             // the empty string is for the helper method's parameter list
     }
 

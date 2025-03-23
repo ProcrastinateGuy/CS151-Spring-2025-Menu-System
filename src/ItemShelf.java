@@ -8,6 +8,14 @@ public class ItemShelf{
     private final int CREATION_LIMIT = 100;
     private HashMap<String, Item> itemShelf = new HashMap<>();
 
+
+    public void printDeal(){
+        for(Item item : itemShelf.values()){
+            System.out.println("ID: " +  item.getItemID() +
+                "   Name: " + item.getName()+
+                "   Discount %: " + Integer.toString( item.getDiscount()));
+        }
+    }
     /**
      * Default constructor - Creates Empty Item ArrayList
      */
