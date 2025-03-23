@@ -106,59 +106,13 @@ public class Main {
         loginPrompt(accountManager);
     }
 
-    public static void main(String[] args) {
-       
-        ItemShelf shelf = null;
-        if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            shelf = new ItemShelf(".\\itemDB.txt");
-        } else {
-            shelf = new ItemShelf("./itemDB.txt");
-        }
-
-        AccountManager accountManager = new AccountManager();
-        ReviewManager reviewManager = new ReviewManager();
-        boolean exit = false;
-
-        loginPrompt(accountManager);
-
-        while (!exit) {
-            clearScreen(); // Clear screen at the beginning of each iteration
-            System.out.println();
-
-            System.out.print("Enter your birthday (YYYY-MM-DD): ");
-            String birthday = scanner.nextLine();
-            exitProgram(birthday);
-            System.out.println();
-
-            System.out.print("Do you want text notifications? (Yes/No): ");
-            String textMsg = scanner.nextLine();
-
-            if (textMsg.equalsIgnoreCase("Yes")) {
-                textMsg = "true";
-            } else if (textMsg.equalsIgnoreCase("No")) {
-                textMsg = "false";
-            }
-            exitProgram(textMsg);
-            System.out.println();
-
-            System.out.print("Enter a new password: ");
-            String password = scanner.nextLine();
-            exitProgram(password);
-            System.out.println();
-
-            String customerID = accountManager.generateAccount(name, phone, password);
-            accountManager.completeProfile(customerID, email, address, interests, birthday, paymentMethod, Boolean.parseBoolean(textMsg));
-
-            loginPrompt(accountManager);
-        }
-
         public static void main (String[]args){
 
 
             if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                shelf = new ItemShelf(".\\src\\itemDB.txt");
+                shelf = new ItemShelf(".\\itemDB.txt");
             } else {
-                shelf = new ItemShelf("./src/itemDB.txt");
+                shelf = new ItemShelf("./itemDB.txt");
             }
 
             AccountManager accountManager = new AccountManager();
