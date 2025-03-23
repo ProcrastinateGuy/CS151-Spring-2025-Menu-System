@@ -93,19 +93,19 @@ public class Main {
                     String[] reviewInfo = new String[5];
                     double rating;
                     Runnable[] tasksBeforeinput = {
-                            () -> System.out.print("Enter your writer ID: "),
-                            () -> System.out.print("Enter target ID (restaurant ID): "),
-                            () -> System.out.print("Enter rating (e.g., 4.5): "),
-                            () -> System.out.print("Enter your review: "),
-                            () -> System.out.print("Is this a verified purchase? (true/false): ")
+                        () -> System.out.print("Enter your writer ID: "),
+                        () -> System.out.print("Enter target ID (restaurant ID): "),
+                        () -> System.out.print("Enter rating (e.g., 4.5): "),
+                        () -> System.out.print("Enter your review: "),
+                        () -> System.out.print("Is this a verified purchase? (true/false): ")
                     };
 
                     Consumer<String>[] tasksAfterInput = new Consumer[]{
-                            input -> reviewInfo[0] = (String) input,
-                            input -> reviewInfo[1] = (String) input,
-                            input -> reviewInfo[2] = (String) input,
-                            input -> reviewInfo[3] = (String) input,
-                            input -> reviewInfo[4] = (String) input
+                        input -> reviewInfo[0] = (String) input,
+                        input -> reviewInfo[1] = (String) input,
+                        input -> reviewInfo[2] = (String) input,
+                        input -> reviewInfo[3] = (String) input,
+                        input -> reviewInfo[4] = (String) input
                     };
 
                     for (int i = 0; i < 5; i++) {
@@ -147,12 +147,6 @@ public class Main {
                         scanner.nextLine();
                         break;
                     }
-                    System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
-                    String input_5 = scanner.nextLine();
-                    exitProgram(input_5);
-                }
-
-                case "6" -> {
 
 
                     System.out.print("Do you want to apply a filter? (y/n): ");
@@ -195,13 +189,13 @@ public class Main {
 
 
                     exitProgram(scanner.nextLine());
-
-                    break;
-                case "6":
+                }
+                //   case "6" -> {
+                case "6" -> {
                     System.out.println("Thank you for using the Food Order System. Goodbye!");
                     exitProgram("exit");
-
                 }
+
 
                 //default case
                 //for invalid input
