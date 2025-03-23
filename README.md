@@ -22,10 +22,15 @@ This is our CS 151 Group Project. We built a terminal/console cafe ordering syst
 <em>UML Diagram of Codebase Pictured Above</em>
 
 <strong>CustomerAccount/AccountManager:</strong> Holds and handles the access/creation of accounts. 
+<br>
 <strong>Deal/DealManager:</strong> Holds and handles deals and how they are applied to orders/items
+<br>
 <strong>IncomingReview/Review/ReviewManager:</strong> Handles writing, printing, and storing Item Reviews
+<br>
 <strong>Order/OrderManager:</strong> Handles the users Cart/Full Order
-<strong>Taxable</strong>Implementation of Sales Tax to be applied to Orders
+<br>
+<strong>Taxable:</strong> Implementation of Sales Tax to be applied to Orders
+<br>
 <strong>InvalidArgumentException:</strong> Custom exception class for input validation
 
 
