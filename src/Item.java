@@ -146,13 +146,15 @@ public class Item implements Taxable {
 
     @Override
     public String toString(){
-        return  "Item ID: " + itemID +
-            ", Name: " + name +
-            ", Price: $" + price +
-            ", Quantity: " + quantity +
-            ", Category: " + category +
-            ", Discount: " + discount + "%" +
-            ", Discounted Price: $ " + new BigDecimal(getDiscountedPrice()).setScale(2, RoundingMode.FLOOR)+
-            ", Discounted Price After Tax: $ " + new BigDecimal(getDiscountedPriceAfterTax()).setScale(2, RoundingMode.FLOOR);
-    }
+        return  " Item ID: " + String.format("%-3s", itemID) +
+            " Name: " + String.format("%-16s", name) +
+            " Price: $" + String.format("%-6s", price) +
+            " Quantity: " + String.format("%-3s", quantity) +
+            " Category: " + String.format("%-12s", category) +
+            " Discount: " + String.format("%3s%%", discount)+
+            " Discounted Price: $" +
+            String.format("%-6.2f", Double.valueOf(getDiscountedPrice()))+
+
+            " Discounted Price After Tax: $" +
+            String.format("%-6.2f", Double.valueOf(getDiscountedPriceAfterTax()));    }
 }
