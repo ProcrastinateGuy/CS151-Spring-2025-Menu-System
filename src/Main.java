@@ -20,8 +20,92 @@ public class Main {
     }
     public void addItemLoop(CustomerAccount account) {
 
+    public static void loginPrompt(AccountManager accountManager) {
+        // Login prompt function
+        System.out.println("*************** Login ***************");
+        System.out.println("Need an account? Type R or r to move to the registration menu. Type anything else to proceed with login.");
+        String register = scanner.nextLine();
+        if (register.equalsIgnoreCase("R")) {
+            registerPrompt(accountManager);
+            return;
+        }
+        System.out.println("Enter your phone number: ");
+        String phone = scanner.nextLine();
+        exitProgram(phone);
+        System.out.println("Enter your password: ");
+        String password = scanner.nextLine();
+        exitProgram(password);
 
+        if (accountManager.logIn(phone, password)) {
+            System.out.println("Login successful!");
+            // Proceed to the next step
+        } else {
+            System.out.println("Login failed. Please check your credentials.");
+            loginPrompt(accountManager);
+        }
     }
+
+    public static void registerPrompt(AccountManager accountManager) {
+        // Registration prompt function
+        System.out.println("*************** Registration ***************");
+
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        exitProgram(name);
+        System.out.println();
+
+        System.out.print("Enter your phone number: ");
+        String phone = scanner.nextLine();
+        exitProgram(phone);
+        System.out.println();
+
+        System.out.print("Enter your email: ");
+        String email = scanner.nextLine();
+        exitProgram(email);
+        System.out.println();
+
+        System.out.print("Enter your Shopping Interests: ");
+        String interests = scanner.nextLine();
+        exitProgram(interests);
+        System.out.println();
+
+        System.out.print("Enter your address: ");
+        String address = scanner.nextLine();
+        exitProgram(address);
+        System.out.println();
+
+        System.out.print("Enter your payment method: ");
+        String paymentMethod = scanner.nextLine();
+        exitProgram(paymentMethod);
+        System.out.println();
+
+        System.out.print("Enter your birthday (YYYY-MM-DD): ");
+        String birthday = scanner.nextLine();
+        exitProgram(birthday);
+        System.out.println();
+
+        System.out.print("Do you want text notifications? (Yes/No): ");
+        String textMsg = scanner.nextLine();
+
+        if (textMsg.equalsIgnoreCase("Yes")) {
+            textMsg = "true";
+        } else if (textMsg.equalsIgnoreCase("No")) {
+            textMsg = "false";
+        }
+        exitProgram(textMsg);
+        System.out.println();
+
+        System.out.print("Enter a new password: ");
+        String password = scanner.nextLine();
+        exitProgram(password);
+        System.out.println();
+
+        String customerID = accountManager.generateAccount(name, phone, password);
+        accountManager.completeProfile(customerID, email, address, interests, birthday, paymentMethod, Boolean.parseBoolean(textMsg));
+
+        loginPrompt(accountManager);
+    }
+
     public static void main(String[] args) {
        
 
@@ -37,7 +121,12 @@ public class Main {
         CustomerAccount currentAccount = new CustomerAccount();
 
         //ReviewManager reviewManager = new ReviewManager();
+        ReviewManager reviewManager = new ReviewManager();
         boolean exit = false;
+
+        loginPrompt(accountManager);
+
+        while (!exit) {
         do {
             clearScreen(); // Clear screen at the beginning of each iteration
             System.out.println();
@@ -167,23 +256,21 @@ public class Main {
                     exitProgram(input_4);
                 }
 
-                case "5" -> {
+                    break;
+
+
+                case "5":
                     // View reviews feature
                     System.out.print("View (1) Incoming reviews or (2) Outgoing reviews? ");
                     String reviewType = scanner.nextLine();
-                    boolean isIncoming;
                     exitProgram(reviewType);
                     System.out.println();
-
                     if (reviewType.equals("1")) {
-                        isIncoming = true;
+                        reviewManager.viewAllReviews(true);
                     } else if (reviewType.equals("2")) {
-                        isIncoming = false;
+                        reviewManager.viewAllReviews(false);
                     } else {
                         System.out.println("Invalid choice for review type.");
-                        System.out.print("\nPress Enter to return to the main menu...");
-                        scanner.nextLine();
-                        break;
                     }
 
 

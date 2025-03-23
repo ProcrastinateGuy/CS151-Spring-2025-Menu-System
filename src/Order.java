@@ -1,5 +1,4 @@
 
-import java.io.IOException;
 import java.util.HashMap;
 
 public class Order {
@@ -19,9 +18,15 @@ public class Order {
     }
 
     //IOException handles here
-    private void loadAllItem () {
+    private void loadAllItem() {
         try{
-            itemShelf =  new ItemShelf(".\\src\\itemDB.txt");}
+            //I hate windoze
+            if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                itemShelf = new ItemShelf(".\\src\\itemDB.txt");
+            } else {
+                itemShelf = new ItemShelf("./src/itemDB.txt");
+            }
+        }
         catch(InvalidArgumentException e){
             System.out.println("Error loading the items DB");
             System.err.println(e.getMessage());
