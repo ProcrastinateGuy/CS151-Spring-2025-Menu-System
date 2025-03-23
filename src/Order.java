@@ -22,9 +22,9 @@ public class Order {
         try{
             //I hate windoze
             if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                itemShelf = new ItemShelf(".\\src\\itemDB.txt");
+                itemShelf = new ItemShelf(".\\itemDB.txt");
             } else {
-                itemShelf = new ItemShelf("./src/itemDB.txt");
+                itemShelf = new ItemShelf("./itemDB.txt");
             }
         }
         catch(InvalidArgumentException e){

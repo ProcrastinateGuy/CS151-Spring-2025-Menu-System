@@ -109,9 +109,9 @@ public class Main {
        
         ItemShelf shelf = null;
         if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            shelf = new ItemShelf(".\\src\\itemDB.txt");
+            shelf = new ItemShelf(".\\itemDB.txt");
         } else {
-            shelf = new ItemShelf("./src/itemDB.txt");
+            shelf = new ItemShelf("./itemDB.txt");
         }
 
         AccountManager accountManager = new AccountManager();
