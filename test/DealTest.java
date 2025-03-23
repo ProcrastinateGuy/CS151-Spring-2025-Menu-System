@@ -2,6 +2,7 @@ import org.junit.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
 public class DealTest {
     /*
     //Debugging
@@ -11,6 +12,25 @@ public class DealTest {
         System.out.printf("End Date: %s\n", this.endDate);
         System.out.printf("Deal Code: %s\n", this.dealCode);
     }*/
+
+    @Test
+    public void testDealCreation() {
+
+        String start = "12-25-2026 10.00";
+        String end = "12-31-2026 23:59";
+
+        Deal deal = new Deal(0.9f, start, end, "deal" );
+        assertEquals(0.9f, deal.getDealModifier());
+        assertEquals("deal", deal.getDealCode());
+        assertNotNull(deal.getStartDate());
+        assertNotNull(deal.getEndDate());
+        assertTrue(deal.getEndDate().isAfter(deal.getStartDate()));
+    }
+    @Test
+    public void testInvalidDealModifier(){
+        new Deal
+
+    }
 
     @Test
     public void DealTest() {
@@ -23,13 +43,13 @@ public class DealTest {
     }
 
     //Debugging
-    public void print() {
-        System.out.printf("Deal Modifier: %.2f\n", this.dealModifier);
-        System.out.println("Test Date: " + LocalDateTime.now());
-        System.out.printf("Start Date: %s\n", this.startDate);
-        System.out.printf("End Date: %s\n", this.endDate);
-        System.out.printf("Deal Code: %s\n", this.dealCode);
-    }
+//    public void print() {
+//        System.out.printf("Deal Modifier: %.2f\n", this.dealModifier);
+//        System.out.println("Test Date: " + LocalDateTime.now());
+//        System.out.printf("Start Date: %s\n", this.startDate);
+//        System.out.printf("End Date: %s\n", this.endDate);
+//        System.out.printf("Deal Code: %s\n", this.dealCode);
+//    }
 
     // The following Test method and test cases are contributed by
     // WangRyan408( Ryan Wang )
