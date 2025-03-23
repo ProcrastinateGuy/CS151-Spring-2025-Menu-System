@@ -126,7 +126,7 @@ public class ReviewManager implements ManagerInterface<Review> {
         SortedMap<String, Review> sortedReviews = new TreeMap<>();
 
         if (isIncoming) {
-            // Copy all incoming reviews to the sorted map
+            // Copying  inComing reviews to sorted map
             for (IncomingReview review : incomingReviewsMap.values()) {
                 sortedReviews.put(review.getReviewID(), review);
             }
@@ -141,8 +141,70 @@ public class ReviewManager implements ManagerInterface<Review> {
             System.out.println("No reviews available.");
         } else {
             for (Review review : sortedReviews.values()) {
-                review.printReview();  // Assuming your reviews have a printReview() method
+                review.printReview();
             }
         }
     }
+
+    // Converting PriorityQueue to ArrayList
+    public ArrayList<Review> heapToList(PriorityQueue<Review> heap) {
+        ArrayList<Review> list = new ArrayList<>();
+        while (!heap.isEmpty()) {
+            list.add(heap.poll());
+        }
+        return list;
+    }
+
+    public void viewFilteredReviews(boolean isIncoming, String filter) {
+        SortedMap<String, Review> sorted = new TreeMap<>();
+        if (isIncoming) {
+            for (IncomingReview review : incomingReviewsMap.values()) {
+                sorted.put(review.getReviewID(), review);
+            }
+        } else if (!isIncoming) {
+            for (OutgoingReview review : outgoingReviewsMap.values()) {
+                sorted.put(review.getReviewID(), review);
+            }
+        } else {
+            if (sorted.isEmpty()) {
+                System.out.println("No reviews available.");
+                return;
+            } else {
+                System.out.println("Reviews neihter inComing nor outGoing.");
+                return;
+            }
+        }
+
+        PriorityQueue<Review> reviewedHeap;
+        switch (filter) {
+            case "newest":
+                // Newest to oldest
+                reviewedHeap = new PriorityQueue<>(Collections.reverseOrder(Comparator.comparing(Review::getReviewDate)));
+                break;
+            case "oldest":
+                // Oldest to newest
+                reviewedHeap = new PriorityQueue<>(Comparator.comparing(Review::getReviewDate));
+                break;
+            case "highest":
+                // Highest rating to lowest
+                reviewedHeap = new PriorityQueue<>(Collections.reverseOrder(Comparator.comparingDouble(Review::getRating)));
+                break;
+            case "lowest":
+                // Lowest rating to highest
+                reviewedHeap = new PriorityQueue<>(Comparator.comparingDouble(Review::getRating));
+                break;
+            default:
+                System.out.println("Invalid filter option provided.");
+                return;
+        }
+        reviewedHeap.addAll(sorted.values());
+
+        // Using converting method from heap to list
+        ArrayList<Review> filteredReviews = heapToList(reviewedHeap);
+
+        for (Review review : filteredReviews) {
+            review.printReview();
+        }
+    }
+
 }
