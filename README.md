@@ -56,7 +56,7 @@ Clone the repository from https://github.com/ProcrastinateGuy/CS151-Spring-2025-
 # Contributions
 <strong>Ryan:</strong> Helped integrate Login/Registration, wrote the initial code for the Deal Class, helped with Item/Order Class. Also currently writing this README
 <br>
-<strong>Kenan:</strong>
+<strong>Kenan:</strong> Implemented an abstract Review class with OutgoingReview and IncomingReview subclasses. Created a ReviewManager with filtering options for viewing reviews. Also designed the main method in Main.java and the initial terminal interface.
 <br>
 <strong>Sean:</strong> Wrote a lot of the code
 <br>
