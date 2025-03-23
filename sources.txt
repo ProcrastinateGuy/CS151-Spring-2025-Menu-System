@@ -1,0 +1,16 @@
+./src/IncomingReview.java
+./src/InvalidArgumentException.java
+./src/ManagerInterface.java
+./src/OutgoingReview.java
+./src/Review.java
+./src/Deal.java
+./src/ReviewManager.java
+./src/DealManager.java
+./src/ItemShelf.java
+./src/OrderManager.java
+./src/Taxable.java
+./src/Item.java
+./src/Order.java
+./src/AccountManager.java
+./src/CustomerAccount.java
+./src/Main.java
