@@ -77,9 +77,7 @@ public class ReviewManager implements ManagerInterface<Review> {
     public void generateReview(CustomerAccount writer, CustomerAccount target,
             double rating, String reviewText) {
         String reviewID = generateID();
-        outgoingReviewsMap.put(reviewID,
-                new OutgoingReview(reviewID, writer, target,
-                        rating, reviewText, LocalDateTime.now(), false));
+        outgoingReviewsMap.put(reviewID, new OutgoingReview(reviewID, writer, target, rating, reviewText, LocalDateTime.now(), false));
     }
 
     //methods for incoming Reviews
