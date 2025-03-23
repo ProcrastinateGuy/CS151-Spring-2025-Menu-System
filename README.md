@@ -60,4 +60,4 @@ Clone the repository from https://github.com/ProcrastinateGuy/CS151-Spring-2025-
 <br>
 <strong>Sean:</strong> Wrote a lot of the code
 <br>
-<strong>Efe:</strong>
+<strong>Efe:</strong> Worked on item and order classes, also wrote test files
