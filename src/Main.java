@@ -208,7 +208,7 @@ public class Main {
                         }
 
                         case "3" -> {
-                            System.out.println("Deals are not fully implemented yet.");
+                            shelf.printDeal();
                             System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
 
                             String input_3 = scanner.nextLine();
