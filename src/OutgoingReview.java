@@ -1,5 +1,6 @@
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class OutgoingReview extends Review {
 
@@ -55,6 +56,7 @@ public class OutgoingReview extends Review {
 
     @Override
     public void printReview() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         System.out.println("----- Outgoing Review -----");
         System.out.println(
             (isVerifiedPurchase) ? " -** Verified Purchase **- " : " -** Unverified **- " );
