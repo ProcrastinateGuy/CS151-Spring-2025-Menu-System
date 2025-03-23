@@ -1,6 +1,5 @@
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class IncomingReview extends Review {
 
@@ -36,11 +35,6 @@ public class IncomingReview extends Review {
 
     @Override
     public void printReview() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        System.out.println("----- Incoming Review -----");
-        System.out.println("By: " + getWriterID() + " on " + getReviewDate().format(formatter));
-        System.out.println("Rating: " + getRating() + " (Flagged: " + flagged + ")");
-        System.out.println("Comment: " + getReviewText());
-        System.out.println("----------------------------");
+        super.printReview();
     }
 }
