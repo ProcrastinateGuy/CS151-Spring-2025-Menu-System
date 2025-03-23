@@ -33,7 +33,7 @@ public class AccountManager implements ManagerInterface<CustomerAccount>{
         }), customerID);
     }
 
-    public void generateAccount(String name, String phone) {
+    public void generateAccount(String name, String phone, String password) {
         if(accountsMap.size() >= CREATION_LIMIT){
             System.out.println("Account creation limit exceeded");
             return;
@@ -47,6 +47,9 @@ public class AccountManager implements ManagerInterface<CustomerAccount>{
         CustomerAccount account = new CustomerAccount(customerID, name, phone);
         System.out.println("Greetings, " + name + "! Your ID is " + customerID);
         accountsMap.put(account.getCustomerID(), account);
+        setPassWord(customerID, password);
+        
+        //
     }
 
     //this method let the customer fill out the full information of their profile
