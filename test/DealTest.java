@@ -28,7 +28,7 @@ public class DealTest {
     }
     @Test
     public void testInvalidDealModifier(){
-        new Deal
+        new Deal();
 
     }
 
@@ -55,7 +55,7 @@ public class DealTest {
     // WangRyan408( Ryan Wang )
     // https://github.com/WangRyan408
 
-    public static void main(String[] args) {
+    public static void mainMethod(String[] args) {
 
 
         System.out.println("Valid Dates");

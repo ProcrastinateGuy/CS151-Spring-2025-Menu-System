@@ -34,7 +34,7 @@ public class Item implements Taxable {
     }
 
     public void incrementQuantity(int quantityToAdd) {
-        setQuantity(getQuantity() + quantityToAdd);
+        setQuantity(getQuantity() + quantityToAdd+1);
     }
 
     public void setItemID(String itemID) {
@@ -75,10 +75,12 @@ public class Item implements Taxable {
         }
     }
 
+    @Override
     public void setTaxable(boolean taxable) {
         this.taxable = taxable;
     }
 
+    @Override
     public void setTaxRate(double taxRate) {
         if(taxRate < 0 || taxRate > 1) {
             System.out.println("Invalid tax Rate");
@@ -136,10 +138,12 @@ public class Item implements Taxable {
         return Integer.valueOf(discount);
     }
 
+    @Override
     public boolean isTaxable() {
         return Boolean.valueOf(taxable);
     }
 
+    @Override
     public double getTaxRate() {
         return Double.valueOf( (taxRate) );
     }
