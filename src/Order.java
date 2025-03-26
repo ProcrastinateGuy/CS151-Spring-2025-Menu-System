@@ -19,18 +19,19 @@ public class Order {
 
     //IOException handles here
     private void loadAllItem() {
-        try{
-            //I hate windoze
-            if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                itemShelf = new ItemShelf(".\\itemDB.txt");
-            } else {
-                itemShelf = new ItemShelf("./itemDB.txt");
 
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            try{
+                itemShelf = new ItemShelf(".\\src\\itemDB.txt");}
+            catch (Exception e){
+                itemShelf = new ItemShelf(".\\itemDB.txt");
             }
-        }
-        catch(InvalidArgumentException e){
-            System.out.println("Error loading the items DB");
-            System.err.println(e.getMessage());
+        } else {
+            try{
+                itemShelf = new ItemShelf("./src/itemDB.txt");}
+            catch (Exception e){
+                itemShelf = new ItemShelf("./itemDB.txt");
+            }
         }
     }
 
@@ -128,6 +129,6 @@ public class Order {
         return "Order Details: \n"
                 + "Order Number: " + orderID + "\n"
                 + "Customer ID: " + customerID + "\n"
-                + "Subtotal: $" + String.format("%.2f", subtotal) + "\n";
+                + "Subtotal: $" + String.format("%.2f", getSubtotal()) + "\n";
     }
 }

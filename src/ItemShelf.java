@@ -10,10 +10,20 @@ public class ItemShelf{
 
 
     public void printDeal(){
+        int [] outputList = new int[itemShelf.size()+1];
         for(Item item : itemShelf.values()){
-            System.out.println("ID: " +  item.getItemID() +
-                "   Name: " + item.getName()+
-                "   Discount %: " + Integer.toString( item.getDiscount()));
+            if(item.getDiscount() != 0){
+                outputList[Integer.parseInt(item.getItemID())] = 1;
+            }
+        }
+
+        for(int i=0; i<outputList.length; i++){
+            if(outputList[i] == 0){continue;}
+            Item itemPrint = itemShelf.get(String.valueOf(i));
+            System.out.println("ID: " +  String.format("%-3s", itemPrint.getItemID()) +
+                "   Name: " + String.format("%-16s",itemPrint.getName())+
+                "   Discount %: " + String.format("%-3d%%",itemPrint.getDiscount()));
+
         }
     }
     /**
@@ -25,6 +35,7 @@ public class ItemShelf{
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             String[] values;
+            boolean taxable = false;
             while ((line = reader.readLine()) != null) {
 
                 if(itemShelf.size() >= CREATION_LIMIT){
@@ -32,9 +43,11 @@ public class ItemShelf{
                     break;
                 }
                 values = line.split(",");
+                taxable = (values[6].equalsIgnoreCase("y")) ? true : false;
+
                 Item item = new Item(values[0], values[1],
                     Double.parseDouble(values[2]), Integer.parseInt(values[3]),
-                    values[4], Integer.parseInt(values[5]), Boolean.parseBoolean(values[6]));
+                    values[4], Integer.parseInt(values[5]), taxable);
 
                 itemShelf.put(values[0], item);
 

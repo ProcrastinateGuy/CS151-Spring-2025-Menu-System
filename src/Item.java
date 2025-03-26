@@ -34,7 +34,7 @@ public class Item implements Taxable {
     }
 
     public void incrementQuantity(int quantityToAdd) {
-        setQuantity(getQuantity() + quantityToAdd);
+        setQuantity(getQuantity() + quantityToAdd+1);
     }
 
     public void setItemID(String itemID) {

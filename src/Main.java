@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 public class Main {
     private static ItemShelf shelf;
     private static Scanner scanner = new Scanner(System.in);
+    private static String currentPhoneLoggedIn = null;
 
     public static void clearScreen() {
         // Clear screen function
@@ -25,24 +26,38 @@ public class Main {
         System.out.println("*************** Login ***************");
         System.out.println("Need an account? Type R or r to move to the registration menu. Type anything else to proceed with login.");
         String register = scanner.nextLine();
+        exitProgram(register);
         if (register.equalsIgnoreCase("R")) {
             registerPrompt(accountManager);
             return;
         }
         System.out.println("Enter your phone number: ");
-        String phone = scanner.nextLine();
-        exitProgram(phone);
+        currentPhoneLoggedIn = scanner.nextLine();
+        exitProgram(currentPhoneLoggedIn);
         System.out.println("Enter your password: ");
         String password = scanner.nextLine();
         exitProgram(password);
 
-        if (accountManager.logIn(phone, password)) {
+        if (accountManager.logIn(currentPhoneLoggedIn, password)) {
             System.out.println("Login successful!");
             // Proceed to the next step
         } else {
             System.out.println("Login failed. Please check your credentials.");
             loginPrompt(accountManager);
         }
+    }
+    public static void printMenu () {
+        System.out.println();
+        System.out.println(System.getProperty("os.name"));
+        System.out.println("*************** Welcome To Our Cafe ***************");
+        System.out.println("1. View Menu");
+        System.out.println("2. Place an Order");
+        System.out.println("3. View Deals/Promos");
+        System.out.println("4. Write a Review");
+        System.out.println("5. View Reviews");
+        System.out.println("6. Exit");
+        System.out.println("Note: You can type 'exit' to any prompt to close the app.");
+        System.out.print("Enter your choice: ");
     }
 
     public static void registerPrompt(AccountManager accountManager) {
@@ -110,43 +125,42 @@ public class Main {
 
 
             if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                shelf = new ItemShelf(".\\itemDB.txt");
+                try{
+                shelf = new ItemShelf(".\\src\\itemDB.txt");}
+                catch (Exception e){
+                    shelf = new ItemShelf(".\\itemDB.txt");
+                }
             } else {
-                shelf = new ItemShelf("./itemDB.txt");
+                try{
+                shelf = new ItemShelf("./src/itemDB.txt");}
+                catch (Exception e){
+                    shelf = new ItemShelf("./itemDB.txt");
+                }
             }
 
             AccountManager accountManager = new AccountManager();
 
+            loginPrompt(accountManager);
             //this line will be replaced by getting the return from the log in session
-            CustomerAccount currentAccount = new CustomerAccount();
+            CustomerAccount currentAccount =  accountManager.getAccountByPhone(currentPhoneLoggedIn);
 
             //ReviewManager reviewManager = new ReviewManager();
             //ReviewManager reviewManager = new ReviewManager();
             boolean exit = false;
-
-            loginPrompt(accountManager);
+            int previousOption = 0;
 
             while (!exit) {
                 do {
-                    clearScreen(); // Clear screen at the beginning of each iteration
-                    System.out.println();
-                    System.out.println(System.getProperty("os.name"));
-                    System.out.println("*************** Welcome To Our Cafe ***************");
-                    System.out.println("1. View Menu");
-                    System.out.println("2. Place an Order");
-                    System.out.println("3. View Deals/Promos");
-                    System.out.println("4. Write a Review");
-                    System.out.println("5. View Reviews");
-                    System.out.println("6. Exit");
-                    System.out.println("Note: You can type 'exit' to any prompt to close the app.");
-                    System.out.print("Enter your choice: ");
+                    if(previousOption != 1){clearScreen();} // Clear screen at the beginning of each iteration
 
+                    printMenu();
                     String inputOption = scanner.nextLine();
                     exitProgram(inputOption);
                     System.out.println();
 
                     switch (inputOption) {
                         case "1" -> {
+                            previousOption = 1;
                             shelf.printAllItems();
                             System.out.print("\nPress Enter to return to the main menu or type exit to close the app: ");
                             String input_1 = scanner.nextLine();
@@ -154,7 +168,7 @@ public class Main {
                         }
 
                         case "2" -> {
-
+                            previousOption = 2;
                             boolean stillAdding = true;
                             int loopCounter = 0;
                             String orderID = null;
@@ -206,6 +220,7 @@ public class Main {
                         }
 
                         case "3" -> {
+                            previousOption = 3;
                             shelf.printDeal();
                             System.out.print("\nPress Enter to return to the main menu or type exit to close the app:");
 
@@ -214,7 +229,7 @@ public class Main {
                         }
 
                         case "4" -> {
-
+                            previousOption = 4;
                             String userInput;
 
                             String[] reviewInfo = new String[5];
@@ -260,6 +275,7 @@ public class Main {
 
 
                         case "5" -> {
+                            previousOption = 5;
                             boolean isIncoming = true;
                             // View reviews feature
                             System.out.print("View (1) Incoming reviews or (2) Outgoing reviews? ");
@@ -318,6 +334,7 @@ public class Main {
                         }
                         //   case "6" -> {
                         case "6" -> {
+                            previousOption = 6;
                             exitProgram("exit");
                         }
 
