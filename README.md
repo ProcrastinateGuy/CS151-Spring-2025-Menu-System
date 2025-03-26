@@ -47,7 +47,7 @@ Pre-requisites:
 Clone the repository from https://github.com/ProcrastinateGuy/CS151-Spring-2025-Menu-System
 
 # Usage
-<strong>Step 1:</strong> Change Directory into src
+<strong>Step 1:</strong> Change Directory into ```CS_151_Project\out\production\CS 151```
 <br>
 <strong>Step 2:</strong> Run `java Main`
 <br>
