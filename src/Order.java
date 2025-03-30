@@ -20,19 +20,7 @@ public class Order {
     //IOException handles here
     private void loadAllItem() {
 
-        if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            try{
-                itemShelf = new ItemShelf(".\\src\\itemDB.txt");}
-            catch (Exception e){
-                itemShelf = new ItemShelf(".\\itemDB.txt");
-            }
-        } else {
-            try{
-                itemShelf = new ItemShelf("./src/itemDB.txt");}
-            catch (Exception e){
-                itemShelf = new ItemShelf("./itemDB.txt");
-            }
-        }
+        itemShelf  = new ItemShelf();
     }
 
     //constructor

@@ -124,28 +124,16 @@ public class Main {
         public static void main (String[]args){
 
 
-            if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                try{
-                shelf = new ItemShelf(".\\src\\itemDB.txt");}
-                catch (Exception e){
-                    shelf = new ItemShelf(".\\itemDB.txt");
-                }
-            } else {
-                try{
-                shelf = new ItemShelf("./src/itemDB.txt");}
-                catch (Exception e){
-                    shelf = new ItemShelf("./itemDB.txt");
-                }
-            }
+            ItemShelf shelf = new ItemShelf();
 
             AccountManager accountManager = new AccountManager();
 
-            loginPrompt(accountManager);
-            //this line will be replaced by getting the return from the log in session
-            CustomerAccount currentAccount =  accountManager.getAccountByPhone(currentPhoneLoggedIn);
+            //loginPrompt(accountManager);
 
-            //ReviewManager reviewManager = new ReviewManager();
-            //ReviewManager reviewManager = new ReviewManager();
+            //CustomerAccount currentAccount =  accountManager.getAccountByPhone(currentPhoneLoggedIn);
+            accountManager.generateAccount("123", "1234567890", "123");
+            CustomerAccount currentAccount =  accountManager.getAccountByPhone("1234567890");
+            System.out.println("Test Account: Phone: 1234567890, pwd: 123");
             boolean exit = false;
             int previousOption = 0;
 
