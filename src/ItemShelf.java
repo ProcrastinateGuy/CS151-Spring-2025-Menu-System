@@ -53,7 +53,7 @@ public class ItemShelf{
 
             }
         } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+            System.err.println("Exception Occurred: " + e.getMessage());
             //propagate the Exception to the caller
             throw new InvalidArgumentException(e.getMessage(), new Throwable());
 
