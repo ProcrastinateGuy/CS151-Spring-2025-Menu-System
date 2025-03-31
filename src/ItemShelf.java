@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Arrays;
 
 public class ItemShelf{
     private final int CREATION_LIMIT = 100;
@@ -26,12 +25,54 @@ public class ItemShelf{
 
         }
     }
+    //no argument constructor
+    // create an Item shelf object based on default path
+    public ItemShelf(){
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                loadItems(".\\resource\\itemDB.txt");
+            }else{
+                loadItems("./resource/itemDB.txt");
+            }
+        }
+        catch (IOException e){
+            System.err.println("Exception Occurred: " + e.getMessage());
+
+            //propagate the Exception to the caller
+            throw new InvalidArgumentException(e.getMessage(), new Throwable());
+        }
+    }
+
     /**
-     * Default constructor - Creates Empty Item ArrayList
+     * constructor - Creates Empty Item ArrayList
      */
     public ItemShelf(String filePath){
 
 
+        try {
+            loadItems(filePath);
+        } catch (IOException e) {
+            System.err.println("Exception Occurred: " + e.getMessage());
+            //propagate the Exception to the caller
+            throw new InvalidArgumentException(e.getMessage(), new Throwable());
+
+        }
+    }
+
+    /**
+     * Copy Constructor - Copies another Item ArrayList to this object.
+     */
+    public ItemShelf (HashMap<String, Item> items) {
+        if(items.isEmpty()){
+            itemShelf  = new HashMap<>();
+        }else{
+            itemShelf.putAll(items);
+        }
+    }
+
+    private void loadItems(String filePath) throws IOException{
+        String currentDir = System.getProperty("user.dir");
+        System.out.println("Current working directory: " + currentDir);
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             String[] values;
@@ -52,25 +93,11 @@ public class ItemShelf{
                 itemShelf.put(values[0], item);
 
             }
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
-            //propagate the Exception to the caller
-            throw new InvalidArgumentException(e.getMessage(), new Throwable());
-
+        }catch (IOException e){
+            throw new IOException(e.getMessage());
         }
-    }
 
-    /**
-     * Copy Constructor - Copies another Item ArrayList to this object.
-     */
-    public ItemShelf (HashMap<String, Item> items) {
-        if(items.isEmpty()){
-            itemShelf  = new HashMap<>();
-        }else{
-            itemShelf.putAll(items);
-        }
     }
-
 
     public boolean contains(String itemID) {
         if (itemID == null) return false;

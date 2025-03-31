@@ -179,7 +179,7 @@ public class ReviewManager implements ManagerInterface <Review> {
                 System.out.println("No reviews available.");
                 return;
             } else {
-                System.out.println("Reviews neihter inComing nor outGoing.");
+                System.out.println("Reviews neither inComing nor outGoing.");
                 return;
             }
         }

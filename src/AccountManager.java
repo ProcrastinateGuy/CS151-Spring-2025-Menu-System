@@ -57,6 +57,7 @@ public class AccountManager implements ManagerInterface<CustomerAccount>{
 
     public void completeProfile(String customerID, String email, String address, String interest,
                                 String birthday, String paymentMethod, boolean textMsgAd ){
+
         if(!accountsMap.containsKey(customerID)){ System.out.println("CustomerID not found in Manager"); return; }
         CustomerAccount account = accountsMap.get(customerID);
         account.setEmail(email);
